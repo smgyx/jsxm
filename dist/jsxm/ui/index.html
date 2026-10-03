@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>jsxm 状态栏</title>
+    <style>
+      .jsxm-status {
+        font-family: system-ui, sans-serif;
+        font-size: 13px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: #f6f6f4;
+        border: 1px solid #d9d9d5;
+        color: #2c2c2a;
+      }
+      .jsxm-status .title {
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="jsxm-status">
+      <div class="title">精神小妹 · 状态栏</div>
+      <div id="jsxm-body">加载中…</div>
+    </div>
+    <script>
+      // 这里读 MVU 变量渲染状态栏
+      // const data = await Mvu.getMvuData({ message_id: 'latest' });
+      document.getElementById('jsxm-body').textContent = '在这里渲染变量';
+    </script>
+  </body>
+</html>

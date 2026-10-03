@@ -1,45 +1,76 @@
 #!/usr/bin/env bash
-# 发布脚本：源码同步到 dist → 提交 → 打标签 → 推送 → 打印 CDN 地址
+# 正式发布：src/{项目} → dist/{项目} → 提交 → 打 tag → 推送 → 打印 CDN 地址
 #
 # 用法（在 Git Bash 里跑）：
-#   ./发布.sh v0.0.1 "这次改了什么"
+#   ./发布.sh <项目名> <版本号> [说明]
 #
-# 版本号必须每次递增，且与角色卡里的 character_version 对齐。
+# 示例：
+#   ./发布.sh jsxm v0.1.0 "初始版本"
+#
+# 标签会自动加项目前缀（jsxm + v0.1.0 → jsxm-v0.1.0），
+# 这样一个仓库放多个角色卡项目时版本号不会互相顶掉。
+#
+# 注意：bash 变量名只能用 ASCII，所以这里全用英文变量名。
 
 set -e
 
-版本="$1"
-说明="${2:-更新}"
+PROJ="$1"
+VER="$2"
+MSG="${3:-更新}"
 
-if [ -z "$版本" ]; then
-  echo "用法: ./发布.sh <版本号> [说明]"
-  echo "示例: ./发布.sh v0.0.1 \"新增问候脚本\""
+if [ -z "$PROJ" ] || [ -z "$VER" ]; then
+  echo "用法: ./发布.sh <项目名> <版本号> [说明]"
+  echo "示例: ./发布.sh jsxm v0.1.0 \"初始版本\""
+  echo
+  echo "现有项目:"
+  ls src
   exit 1
 fi
 
-if git rev-parse "$版本" >/dev/null 2>&1; then
-  echo "标签 $版本 已存在，请换一个版本号（tag 内容改了 CDN 不会更新）"
+if [ ! -d "src/$PROJ" ]; then
+  echo "找不到 src/$PROJ"
+  echo "现有项目:"
+  ls src
   exit 1
 fi
 
-echo "==> 同步 src 到 dist"
-cp -f src/demo/hello.js dist/demo/hello.js
+TAG="$PROJ-$VER"
+
+if git rev-parse "$TAG" >/dev/null 2>&1; then
+  echo "标签 $TAG 已存在"
+  echo "tag 内容改了 CDN 不会更新（immutable 缓存），请换一个版本号"
+  exit 1
+fi
+
+echo "==> 同步 src/$PROJ 到 dist/$PROJ"
+mkdir -p "dist/$PROJ"
+cp -R "src/$PROJ/." "dist/$PROJ/"
 
 echo "==> 提交"
 git add -A
-git commit -m "$说明"
+if git diff --cached --quiet; then
+  echo "没有改动，跳过提交"
+else
+  git commit -m "$MSG"
+fi
 
-echo "==> 打标签 $版本"
-git tag "$版本"
+echo "==> 打标签 $TAG"
+git tag "$TAG"
 
 echo "==> 推送"
 git push origin main
-git push origin "$版本"
+git push origin "$TAG"
+
+CDN="https://testingcf.jsdelivr.net/gh/smgyx/jsxm@$TAG"
 
 echo
-echo "发布完成"
-echo "CDN 地址:"
-echo "  https://testingcf.jsdelivr.net/gh/smgyx/jsxm@$版本/dist/demo/hello.js"
+echo "发布完成：$TAG"
 echo
-echo "角色卡脚本里写这一行:"
-echo "  import 'https://testingcf.jsdelivr.net/gh/smgyx/jsxm@$版本/dist/demo/hello.js';"
+echo "角色卡脚本条目里写这一行："
+echo "  import '$CDN/dist/$PROJ/script/index.js';"
+
+if [ -f "dist/$PROJ/ui/index.html" ]; then
+  echo
+  echo "状态栏里写："
+  echo "  \$('body').load('$CDN/dist/$PROJ/ui/index.html')"
+fi
