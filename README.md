@@ -34,31 +34,50 @@ https://testingcf.jsdelivr.net/gh/smgyx/jsxm
 https://testingcf.jsdelivr.net/gh/smgyx/jsxm@v0.0.1/dist/demo/hello.js
 ```
 
+## 项目
+
+| 项目 | 说明 | 最新 tag |
+|---|---|---|
+| `jsxm` | 精神小妹（正式项目） | `jsxm-v0.1.0` |
+| `demo` | 模板示例，别删 | `v0.0.1` |
+
+目录全是 ASCII：项目名用拼音首字母（jsxm = 精神小妹），子目录用 `script/` `ui/`，这样 URL 里不会出现中文和百分号编码。
+
 ## 角色卡里怎么用
 
-在酒馆助手里新建一条「全局脚本」，内容只写一行：
+**jsxm 项目（当前可用）**：
 
 ```js
-import 'https://testingcf.jsdelivr.net/gh/smgyx/jsxm@v0.0.1/dist/demo/hello.js';
+import 'https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v0.1.0/dist/jsxm/script/index.js';
 ```
 
-对应 tavern-cards-forge 项目的话，就是 `脚本/{名字}.txt` 文件，内容写这一行，然后 `pack`。
+状态栏：
+
+```js
+$('body').load('https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v0.1.0/dist/jsxm/ui/index.html')
+```
+
+对应 tavern-cards-forge 项目的话，上面第一行就是 `脚本/jsxm.txt` 的文件内容，写完 `pack` 即可。
 
 ## 发布流程
 
+用脚本，别手敲（标签要带项目前缀，手写容易漏）：
+
 ```bash
-# 1. 改代码（编辑 src/）
-# 2. 产出到 dist/（当前示例是纯 JS，手动复制即可；上了 TS/Vue 之后走 webpack）
-cp src/demo/hello.js dist/demo/hello.js
+./调试.sh jsxm "改了什么"          # 调试：commit sha 地址，改完立刻生效
+./发布.sh jsxm v0.1.1 "改了什么"    # 正式：打 tag jsxm-v0.1.1 并推送
+```
 
-# 3. 提交并打标签，版本号与角色卡版本对齐
-git add .
-git commit -m "feat: 说明本次改动"
-git tag v0.0.1
+两个脚本都会自动把 `src/{项目}/` 同步到 `dist/{项目}/`，提交、打标签、推送一条龙，最后打印可直接粘贴的地址。
 
-# 4. 推送（文件和标签要分开推）
-git push origin main
-git push origin v0.0.1
+> 脚本里的变量名**必须全是 ASCII** —— bash 不支持中文变量名，`项目=jsxm` 会被当成命令而报 `command not found`。JS 里用中文变量名没问题。
+
+## 新建一个项目
+
+```bash
+mkdir -p src/新项目/script src/新项目/ui
+# 写完代码后：
+./发布.sh 新项目 v0.1.0 "初始版本"
 ```
 
 ## 三个必须记住的坑
