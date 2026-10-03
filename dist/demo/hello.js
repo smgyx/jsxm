@@ -1,0 +1,1 @@
+const e="0.0.1";$(()=>{console.log(`[jsxm] 远程脚本已加载 v${e}`),toastr.info(`远程脚本已加载 v${e}`,"jsxm",{timeOut:2500}),eventOn("jsxm:ping",async t=>(console.log("[jsxm] 收到 ping:",t),{ok:!0,版本:e})),eventOn("jsxm:消息渲染完成",async()=>{const t=SillyTavern.getContext();console.log("[jsxm] 当前角色:",t.name2,"| 消息数:",t.chat?.length)})});

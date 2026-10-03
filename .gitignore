@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+*.log
+.vscode/
+
+# 注意：这里【绝对不能】忽略 dist/
+# jsDelivr 是从 Git 仓库里读文件的，dist 不提交 CDN 就取不到。
+# 这是本仓库和普通前端项目最大的区别。
