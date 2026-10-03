@@ -38,7 +38,7 @@ https://testingcf.jsdelivr.net/gh/smgyx/jsxm@v0.0.1/dist/demo/hello.js
 
 | 项目 | 说明 | 最新 tag |
 |---|---|---|
-| `jsxm` | 精神小妹（正式项目） | `jsxm-v0.1.0` |
+| `jsxm` | 精神小妹（正式项目） | `jsxm-v1.3` |
 | `demo` | 模板示例，别删 | `v0.0.1` |
 
 目录全是 ASCII：项目名用拼音首字母（jsxm = 精神小妹），子目录用 `script/` `ui/`，这样 URL 里不会出现中文和百分号编码。
@@ -48,13 +48,13 @@ https://testingcf.jsdelivr.net/gh/smgyx/jsxm@v0.0.1/dist/demo/hello.js
 **jsxm 项目（当前可用）**：
 
 ```js
-import 'https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v0.1.0/dist/jsxm/script/index.js';
+import 'https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v1.3/dist/jsxm/script/index.js';
 ```
 
 状态栏：
 
 ```js
-$('body').load('https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v0.1.0/dist/jsxm/ui/index.html')
+$('body').load('https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v1.3/dist/jsxm/ui/index.html')
 ```
 
 对应 tavern-cards-forge 项目的话，上面第一行就是 `脚本/jsxm.txt` 的文件内容，写完 `pack` 即可。
@@ -65,7 +65,7 @@ $('body').load('https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v0.1.0/dist/js
 
 ```bash
 ./调试.sh jsxm "改了什么"          # 调试：commit sha 地址，改完立刻生效
-./发布.sh jsxm v0.1.1 "改了什么"    # 正式：打 tag jsxm-v0.1.1 并推送
+./发布.sh jsxm v1.4 "改了什么"      # 正式：打 tag jsxm-v1.4 并推送
 ```
 
 两个脚本都会自动把 `src/{项目}/` 同步到 `dist/{项目}/`，提交、打标签、推送一条龙，最后打印可直接粘贴的地址。
