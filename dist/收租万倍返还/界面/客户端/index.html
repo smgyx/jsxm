@@ -38,6 +38,10 @@ body{background:var(--c-bg);color:var(--c-text);font-family:"Sarasa Mono SC","Mi
 .ck-i.y{color:var(--c-good)}
 .ck-i.n{color:var(--c-text-muted)}
 .ck-i.ev{color:var(--c-purple)}
+.optbar{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.opt{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--c-surface),var(--c-surface-2));border:1px solid var(--c-border);border-left:3px solid var(--c-primary);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--c-text);cursor:pointer;user-select:none;transition:border-color .15s,transform .1s,filter .15s}
+.opt:active{transform:scale(.985);border-left-color:var(--c-accent);filter:brightness(1.15)}
+.opt .n{flex:none;font-style:normal;font-size:11px;font-weight:700;color:var(--c-primary);background:rgba(83,216,255,.12);border-radius:6px;padding:2px 7px;min-width:26px;text-align:center}
 .sec h3{font-size:12px;color:var(--c-text-muted);letter-spacing:2px;margin-bottom:7px;display:flex;align-items:center;gap:6px}
 .sec h3 i{color:var(--c-primary)}
 .meters{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
@@ -268,7 +272,20 @@ details.pri summary{font-size:12px;color:var(--c-accent);cursor:pointer;user-sel
   function renderStatus(d){
     var w = d.世界, u = d.主角 || {}, bz = safe(d, "别墅", {}), rw = safe(d, "任务", {});
     var act = safe(w, "当前幕", 1);
-    var h = '<div class="term" id="term"><div class="term-head" id="tHead">';
+    var optsOn = false;
+    try{ optsOn = !!window.parent.document.querySelector('[data-opts-on]'); }catch(e){}
+    var opts = safe(d, "选项", []) || [];
+    var ob = "";
+    if(optsOn){
+      var on = 0;
+      (Array.isArray(opts)?opts:[]).forEach(function(o){
+        o = String(o||"").trim(); if(!o) return;
+        on++;
+        ob += '<span class="opt" data-opt="' + esc(o).replace(/"/g,"&quot;") + '"><i class="n">' + (on<10?'0'+on:on) + '</i><span>' + esc(o) + '</span></span>';
+      });
+      if(ob) ob = '<div class="optbar">' + ob + '</div>';
+    }
+    var h = ob + '<div class="term" id="term"><div class="term-head" id="tHead">';
     h += '<span class="t-badge"><i class="fa fa-terminal"></i> 收租系统</span>';
     h += '<span class="t-strip">';
     h += stripChip("<b>第" + safe(w,"日期",1) + "天</b>·" + esc(safe(w,"时段","")));
@@ -359,7 +376,7 @@ details.pri summary{font-size:12px;color:var(--c-accent);cursor:pointer;user-sel
     }
     h += '<div class="sec"><h3><i class="fa fa-users"></i> 租客档案</h3>' + ch + "</div>";
 
-    h += '<div class="foot"><span>收租万倍返还 · 终端 v2.0.0</span><button id="rz" data-act="refresh">手动刷新</button></div>';
+    h += '<div class="foot"><span>收租万倍返还 · 终端 v2.0.3</span><button id="rz" data-act="refresh">手动刷新</button></div>';
     h += "</div></div>";
     app.innerHTML = h;
     applyOpen();
