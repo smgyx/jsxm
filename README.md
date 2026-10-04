@@ -72,6 +72,29 @@ $('body').load('https://testingcf.jsdelivr.net/gh/smgyx/jsxm@jsxm-v1.3/dist/jsxm
 
 > 脚本里的变量名**必须全是 ASCII** —— bash 不支持中文变量名，`项目=jsxm` 会被当成命令而报 `command not found`。JS 里用中文变量名没问题。
 
+## 换一台电脑继续开发
+
+同一 GitHub 账号下，**每台机器各生成一把 SSH key 分别添加**（一个账号支持多个公钥），不要复制私钥到处传——某台机器丢了可以单独在 GitHub 吊销对应的 key，互不影响。
+
+仓库里有初始化脚本：
+
+```bash
+./初始化新电脑.sh
+```
+
+会自动做六件事：检查 git → 配身份 → 生成密钥 → 提示你把公钥加到 GitHub → 测连接 → 克隆仓库。已有密钥会被跳过，不会覆盖。
+
+如果这台机器的网络封了 22 端口，脚本会提示改走 443：
+
+```
+Host github.com
+  HostName ssh.github.com
+  Port 443
+  User git
+```
+
+写进 `~/.ssh/config` 即可。
+
 ## 新建一个项目
 
 ```bash
