@@ -361,7 +361,7 @@ details.pri summary{font-size:12px;color:var(--c-accent);cursor:pointer;user-sel
       var c = chars[nm]||{}, p = safe(c,"私密档案",{})||{}, bd = safe(p,"身体开发",{})||{};
       var pi = PORTRAITS[nm];
       ch += '<div class="tenant"><div class="t-top"><span class="n">' + esc(nm) + (safe(c,"在住",false) ? "" : '<span class="tag">未入住</span>') + '</span><span class="r">' + esc(safe(c,"房间","空置")) + "</span></div>";
-      if(pi) ch += '<img src="' + esc(pi) + '" style="width:100%;border-radius:8px;margin:6px 0" onerror="this.style.display='none'">';
+      if(pi) ch += '<img src="' + esc(pi) + '" style="width:100%;border-radius:8px;margin:6px 0">';
       ch += '<div class="t-meta">情绪 ' + esc(safe(c,"情绪","—")) + " ｜ 欠租 " + fmt(safe(c,"欠租",0)) + " 元 ｜ " + esc(safe(c,"生理期","安全期")) + "</div>";
       ch += '<div class="sub">好感 ' + safe(c,"好感",0) + "</div>" + bar("p", safe(c,"好感",0), 100);
       ch += '<div class="sub">堕落 ' + safe(c,"堕落",0) + "</div>" + bar("v", safe(c,"堕落",0), 100);
