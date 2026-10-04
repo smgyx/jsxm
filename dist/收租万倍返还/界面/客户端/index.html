@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>收租万倍返还 · 系统终端</title>
+<link rel="stylesheet" href="https://testingcf.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<style>
+:root{
+  --c-bg:#14161d; --c-surface:#1d2029; --c-surface-2:#232734; --c-border:#313648;
+  --c-text:#e8eaf0; --c-text-muted:#8b91a3;
+  --c-primary:#53d8ff; --c-accent:#ff5c8a; --c-gold:#ffc857; --c-good:#5dd97c; --c-danger:#ff6b6b; --c-purple:#b07cff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--c-bg);color:var(--c-text);font-family:"Sarasa Mono SC","Microsoft YaHei",system-ui,sans-serif;font-size:14px;line-height:1.6;padding:10px;min-height:100px}
+.wrap{max-width:720px;margin:0 auto}
+.card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:10px;padding:12px 14px}
+.notice{text-align:center;padding:24px 16px;color:var(--c-text-muted)}
+.notice b{color:var(--c-primary)}
+.err{color:var(--c-danger);font-size:13px;text-align:center;padding:20px}
+/* ── 一体折叠终端 ── */
+.term{background:var(--c-surface);border:1px solid var(--c-border);border-radius:10px;overflow:hidden}
+.term-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 12px;cursor:pointer;user-select:none;background:linear-gradient(180deg,var(--c-surface-2),var(--c-surface))}
+.term-head:active{filter:brightness(1.1)}
+.t-badge{font-weight:700;font-size:13px;color:var(--c-primary);letter-spacing:2px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.t-strip{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
+.t-chip{background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:14px;padding:1px 9px;font-size:12px;color:var(--c-text-muted);white-space:nowrap}
+.t-chip b{color:var(--c-gold);font-weight:600}
+.t-chip.m b{color:var(--c-primary)}
+.t-caret{color:var(--c-text-muted);font-size:12px;transition:transform .25s;margin-left:auto}
+.term.closed .t-caret{transform:rotate(-90deg)}
+.optbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.opt-t{font-size:11px;color:var(--c-text-muted);white-space:nowrap;letter-spacing:1px}
+.opt{background:var(--c-surface);border:1px solid var(--c-primary);color:var(--c-primary);border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;user-select:none}
+.opt:active{filter:brightness(1.25)}
+.term-body{padding:10px 12px 12px;border-top:1px solid var(--c-border);display:flex;flex-direction:column;gap:10px}
+.goal{font-size:12px;color:var(--c-text-muted);background:var(--c-surface-2);border-left:3px solid var(--c-primary);border-radius:0 6px 6px 0;padding:5px 9px}
+.goal b{color:var(--c-primary)}
+.ck{background:var(--c-surface-2);border-radius:8px;padding:7px 10px}
+.ck-t{font-size:11px;color:var(--c-text-muted);margin-bottom:4px;letter-spacing:1px}
+.ck-i{font-size:12px;padding:1px 0;color:var(--c-text)}
+.ck-i.y{color:var(--c-good)}
+.ck-i.n{color:var(--c-text-muted)}
+.ck-i.ev{color:var(--c-purple)}
+.sec h3{font-size:12px;color:var(--c-text-muted);letter-spacing:2px;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.sec h3 i{color:var(--c-primary)}
+.meters{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.kv{background:var(--c-surface-2);border-radius:8px;padding:7px 10px}
+.kv .k{font-size:11px;color:var(--c-text-muted);display:flex;gap:5px;align-items:center}
+.kv .v{font-size:17px;font-weight:700;color:var(--c-gold)}
+.kv .v.c{color:var(--c-primary)}
+.bar{height:7px;background:var(--c-bg);border-radius:6px;overflow:hidden;margin-top:5px}
+.bar>i{display:block;height:100%;border-radius:6px;background:var(--c-primary);transition:width .4s}
+.bar.g>i{background:var(--c-good)}
+.bar.p>i{background:var(--c-accent)}
+.bar.v>i{background:var(--c-purple)}
+.bar.o>i{background:var(--c-gold)}
+.sub{font-size:11px;color:var(--c-text-muted);margin-top:3px}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chips .t-chip b{color:var(--c-text)}
+.list{display:flex;flex-direction:column;gap:6px}
+.item{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 8px;background:var(--c-surface-2);border-radius:8px;flex-wrap:wrap}
+.item .n{color:var(--c-text)}
+.item .d{color:var(--c-text-muted);text-align:right;font-size:12px}
+.tenant{border:1px solid var(--c-border);border-radius:10px;padding:9px 10px;background:var(--c-surface-2);margin-top:8px}
+.t-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.t-tab{display:inline-flex;align-items:baseline;gap:5px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:16px;padding:3px 11px;font-size:13px;cursor:pointer;user-select:none;color:var(--c-text)}
+.t-tab b{font-weight:700}
+.t-tab i{font-style:normal;font-size:11px;color:var(--c-text-muted)}
+.t-tab.on{border-color:var(--c-primary);background:rgba(83,216,255,.08)}
+.t-tab.on b,.t-tab.on i{color:var(--c-primary)}
+.t-tab.out{opacity:.55}
+.t-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.t-top .n{font-weight:700;font-size:14px}
+.t-top .r{font-size:11px;color:var(--c-primary)}
+.t-meta{font-size:12px;color:var(--c-text-muted);margin:3px 0 5px}
+.t-mental{font-size:12px;color:var(--c-text);background:var(--c-bg);border-left:3px solid var(--c-accent);padding:4px 8px;border-radius:0 6px 6px 0;margin:6px 0}
+.tag{display:inline-block;font-size:11px;color:var(--c-purple);border:1px solid var(--c-purple);border-radius:4px;padding:0 6px;margin-left:6px}
+details.pri{margin-top:7px;border-top:1px dashed var(--c-border);padding-top:6px}
+details.pri summary{font-size:12px;color:var(--c-accent);cursor:pointer;user-select:none}
+.pri-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:8px}
+.empty{color:var(--c-text-muted);font-size:13px;padding:8px;text-align:center}
+.foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--c-text-muted);padding:2px 2px 0}
+.foot button{background:var(--c-surface-2);border:1px solid var(--c-border);color:var(--c-primary);border-radius:6px;padding:2px 12px;cursor:pointer;font-size:12px}
+.tasks .item{flex-direction:column;gap:2px}
+.tasks .item .req{font-size:12px;color:var(--c-text-muted)}
+.tasks .item .rwd{font-size:12px;color:var(--c-gold)}
+/* ── 开局登记 ── */
+.reg-title{font-size:16px;font-weight:700;letter-spacing:1px;color:var(--c-primary);display:flex;align-items:center;gap:7px}
+.reg-title small{display:block;font-size:11px;color:var(--c-text-muted);font-weight:400;letter-spacing:3px}
+.reg-tip{font-size:12px;color:var(--c-text-muted);margin:7px 0 2px}
+.reg-hint{font-size:12px;color:var(--c-text-muted);background:var(--c-surface-2);border-radius:8px;padding:7px 10px;margin-top:8px}
+.reg-hint b{color:var(--c-gold)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.frow{display:flex;flex-direction:column;gap:3px}
+.frow.wide{grid-column:1/-1}
+.frow label{font-size:11px;color:var(--c-text-muted)}
+.frow input{background:var(--c-bg);border:1px solid var(--c-border);border-radius:7px;color:var(--c-text);font-size:13px;padding:6px 9px;font-family:inherit;width:100%}
+.frow input:focus{outline:none;border-color:var(--c-primary)}
+.fbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
+.fbtns button{flex:1;min-width:150px;border-radius:8px;border:1px solid var(--c-border);font-size:13px;padding:8px 10px;cursor:pointer;font-family:inherit}
+#btnDefault{background:var(--c-primary);border-color:var(--c-primary);color:#10131a;font-weight:700}
+#btnCustom{background:var(--c-surface-2);color:var(--c-accent);border-color:var(--c-accent)}
+.fbtns button:disabled{opacity:.45;cursor:default}
+.fmsg{font-size:12px;color:var(--c-text-muted);margin-top:8px;min-height:1em}
+.fmsg.bad{color:var(--c-danger)}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="notice">① 正在连接系统终端…<br><span style="font-size:12px">若长时间停留在此行：请检查酒馆助手「前端渲染/代码块渲染」是否开启、版本是否为最新，并尝试长按本楼层重新渲染。</span></div></div>
+<script>
+(function(){
+  "use strict";
+  function stage(m){ try{ var a=document.getElementById("app"); if(a && a.innerHTML.indexOf('class="notice"')!==-1){ a.innerHTML='<div class="notice">'+m+'</div>'; } }catch(e){} }
+  stage("② 界面脚本已加载…");
+  var MENUS = {1:"起步",2:"扩张",3:"乡土",4:"山庄",5:"省城"};
+  var GOALS = {
+    1:"站稳脚跟——招到首批租客，跑通收租返还的循环",
+    2:"扩张——接手星耀传媒，商业上初战告捷",
+    3:"乡土——临安山村修路盖房，破局村务",
+    4:"经营——月牙湾山庄业务落地，国际线登场",
+    5:"决战——上海竞标与宋家认领的终局"
+  };
+  var DEFAULTS = {姓名:"林野",年龄:"27",性别:"男",身高:"一米八三",体型:"精瘦有肉",外貌:"眉眼周正，短发利落",衣着:"灰色连帽卫衣配黑色工装裤"};
+  var app = document.getElementById("app");
+  var ui = { mode:null, open:false, tSel:null };
+  var busy = false;
+
+  function safe(o, k, d){ if(o && o[k] !== undefined && o[k] !== null && o[k] !== "") return o[k]; return d; }
+  function fmt(n){
+    if(typeof n !== "number" || isNaN(n)) return String(n);
+    var neg = n < 0; n = Math.abs(n);
+    var s;
+    if(n >= 1e8) s = (n/1e8).toFixed(n%1e8 ? 2 : 0) + "亿";
+    else if(n >= 1e4) s = (n/1e4).toFixed(n%1e4 ? 1 : 0) + "万";
+    else s = n.toLocaleString("zh-CN");
+    return (neg ? "-" : "") + s;
+  }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function bar(cls, v, max){ return '<div class="bar ' + cls + '"><i style="width:' + Math.max(0, Math.min(100, v/max*100)) + '%"></i></div>'; }
+
+  var LEVELS = ["萌新房东","包租新人","职业房东","地产新贵","收租大亨","神豪"];
+  function liveCount(d){ var c=safe(d,"角色",{})||{},n=0; Object.keys(c).forEach(function(k){ if(safe(c[k],"在住",false)) n++; }); return n; }
+  function avgAff(d){ var c=safe(d,"角色",{})||{},n=0,s=0; Object.keys(c).forEach(function(k){ if(safe(c[k],"在住",false)){ n++; s+=(c[k].好感||0); } }); return n? Math.round(s/n):0; }
+  function indCount(d){ return Object.keys(safe(d.主角,"名下产业",{})||{}).length; }
+  function bizCount(d){ var ind=safe(d.主角,"名下产业",{})||{}; return Math.max(0, Object.keys(ind).length - (ind["翡翠湾大别墅"]!==undefined?1:0)); }
+  function lvIdx(d){ return Math.max(0, LEVELS.indexOf(safe(d.主角,"神豪等级","萌新房东"))); }
+  function rep(d){ return (safe(d.主角,"累计返利",0)||0); }
+  var ACT_REQ = {
+    1: [
+      {k:"累计返利 ≥10万", ok:function(d){return rep(d)>=100000;}, cur:function(d){return fmt(rep(d));}},
+      {k:"神豪等级 ≥包租新人", ok:function(d){return lvIdx(d)>=1;}, cur:function(d){return LEVELS[lvIdx(d)];}},
+      {k:"在住租客 ≥3", ok:function(d){return liveCount(d)>=3;}, cur:function(d){return liveCount(d)+" 人";}},
+      {k:"平均好感 ≥30", ok:function(d){return avgAff(d)>=30;}, cur:function(d){return ""+avgAff(d);}},
+      {k:"关键事件：首次打脸（收编三人开局已达成）", ev:true}
+    ],
+    2: [
+      {k:"累计返利 ≥100万", ok:function(d){return rep(d)>=1000000;}, cur:function(d){return fmt(rep(d));}},
+      {k:"神豪等级 ≥职业房东", ok:function(d){return lvIdx(d)>=2;}, cur:function(d){return LEVELS[lvIdx(d)];}},
+      {k:"名下经营性产业 ≥1（翡翠湾别墅除外）", ok:function(d){return bizCount(d)>=1;}, cur:function(d){return bizCount(d)+" 处";}},
+      {k:"关键事件：商战初胜、身世线索", ev:true}
+    ],
+    3: [
+      {k:"累计返利 ≥1000万", ok:function(d){return rep(d)>=10000000;}, cur:function(d){return fmt(rep(d));}},
+      {k:"神豪等级 ≥地产新贵", ok:function(d){return lvIdx(d)>=3;}, cur:function(d){return LEVELS[lvIdx(d)];}},
+      {k:"名下产业 ≥2", ok:function(d){return indCount(d)>=2;}, cur:function(d){return indCount(d)+" 处";}},
+      {k:"关键事件：修路、盖房、村霸事件", ev:true}
+    ],
+    4: [
+      {k:"累计返利 ≥1亿", ok:function(d){return rep(d)>=100000000;}, cur:function(d){return fmt(rep(d));}},
+      {k:"神豪等级 ≥收租大亨", ok:function(d){return lvIdx(d)>=4;}, cur:function(d){return LEVELS[lvIdx(d)];}},
+      {k:"别墅口碑 ≥60", ok:function(d){return (safe(d.别墅,"口碑",0)||0)>=60;}, cur:function(d){return ""+safe(d.别墅,"口碑",0);}},
+      {k:"关键事件：山庄业务线、国际线登场", ev:true}
+    ]
+  };
+  function renderChecklist(d, act){
+    var h = '<div class="ck"><div class="ck-t">进阶条件 · 第' + act + '幕 → 第' + (act+1) + '幕</div>';
+    var req = ACT_REQ[act];
+    if(!req){ h += '<div class="ck-i ev">终幕：无进阶条件，自由收尾</div>'; }
+    else req.forEach(function(r){
+      if(r.ev){ h += '<div class="ck-i ev">◇ ' + esc(r.k) + '（以剧情播报为准）</div>'; }
+      else { var ok = r.ok(d); h += '<div class="ck-i ' + (ok?'y':'n') + '">' + (ok?'✓':'✗') + ' ' + esc(r.k) + '｜当前 ' + esc(r.cur(d)) + '</div>'; }
+    });
+    return h + '</div>';
+  }
+
+  function readStat(){
+    var tries = [];
+    try { if (window.Mvu && typeof window.Mvu.getMvuData === "function") {
+      tries.push(function(){ return Promise.resolve(window.Mvu.getMvuData({ type: "message", message_id: getCurrentMessageId() })).then(function(d){ return d && d.stat_data ? d.stat_data : d; }); });
+    } } catch(e){}
+    try { if (typeof getVariables === "function") {
+      tries.push(function(){ return getVariables({ type: "message", message_id: getCurrentMessageId() }).then(function(v){ return v && v.stat_data ? v.stat_data : v; }); });
+      tries.push(function(){ return getVariables({ type: "chat" }).then(function(v){ return v && v.stat_data ? v.stat_data : v; }); });
+    } } catch(e){}
+    var chain = Promise.reject();
+    tries.forEach(function(t){ chain = chain.catch(t); });
+    return chain.catch(function(){ return null; });
+  }
+
+  /* 未登记 → 登记表单；已登记或旧档缺字段 → 游戏面板（旧档不弹表单） */
+  function decideMode(d){
+    if(!d || !d.世界 || !d.主角) return "form";
+    if(d.主角.已登记 === false) return "form";
+    return "status";
+  }
+
+  /* ── 开局登记表单 ── */
+  function renderForm(){
+    var h = '<div class="card"><div class="reg-title"><i class="fa fa-id-card"></i> 房东登记 <small>LANDLORD REGISTRATION · 开局前请完善档案</small></div>';
+    h += '<div class="reg-tip">系统已绑定，但档案还是空的。填好提交后正式开局；也可以直接沿用默认身份。</div>';
+    h += '<div class="fgrid">';
+    ["姓名","年龄","性别","身高","体型"].forEach(function(k){
+      h += '<div class="frow"><label>' + k + '</label><input id="f_' + k + '" placeholder="' + DEFAULTS[k] + '" value=""></div>';
+    });
+    h += '<div class="frow wide"><label>外貌</label><input id="f_外貌" placeholder="' + DEFAULTS.外貌 + '" value=""></div>';
+    h += '<div class="frow wide"><label>衣着</label><input id="f_衣着" placeholder="' + DEFAULTS.衣着 + '" value=""></div>';
+    h += '</div>';
+    h += '<div class="fbtns"><button id="btnDefault" data-act="default"><i class="fa fa-user-check"></i> 按林野来 · 直接开局</button>';
+    h += '<button id="btnCustom" data-act="custom"><i class="fa fa-pen"></i> 以此档案开局</button></div>';
+    h += '<div class="reg-hint">默认身份（按林野来）：<b>林野，27岁，男，一米八三，精瘦有肉，眉眼周正短发利落，灰色连帽卫衣配黑色工装裤</b>。留空的栏目提交时按默认身份补全。</div>';
+    h += '<div class="fmsg" id="fmsg"></div></div>';
+    app.innerHTML = h;
+  }
+
+  function cleanText(s){
+    return String(s||"").replace(/[|{}\[\]<>]/g," ").replace(/\s*\n\s*/g," ").trim();
+  }
+  function sendText(text){
+    var t = cleanText(text);
+    try { if (typeof triggerSlash === "function") { triggerSlash("/send " + t + " | /trigger"); return true; } } catch(e){}
+    try { var ctx = window.SillyTavern && window.SillyTavern.getContext && window.SillyTavern.getContext();
+      if (ctx && ctx.executeSlashCommandsWithOptions) { ctx.executeSlashCommandsWithOptions("/send " + t + " | /trigger"); return true; } } catch(e){}
+    try { var w = window.parent || window; var ta = w.document.querySelector("#send_textarea");
+      if (ta && !ta.value) { ta.value = t; ta.dispatchEvent(new Event("input",{bubbles:true})); return true; } } catch(e){}
+    return false;
+  }
+  function fieldVal(k){ var el = document.getElementById("f_" + k); return el ? el.value.trim() : ""; }
+  function doSubmit(useDefault){
+    var msg, vals = {};
+    ["姓名","年龄","性别","身高","体型","外貌","衣着"].forEach(function(k){ vals[k] = useDefault ? DEFAULTS[k] : fieldVal(k); });
+    if(!useDefault && !vals.姓名){ var m = document.getElementById("fmsg"); m.textContent = "至少写个名字再提交，或者直接点「按林野来」。"; m.className = "fmsg bad"; return; }
+    if(!useDefault){ Object.keys(vals).forEach(function(k){ if(!vals[k]) vals[k] = DEFAULTS[k]; }); }
+    if(useDefault){ msg = "按林野来"; }
+    else {
+      msg = "【接手登记】姓名：" + vals.姓名 + "｜年龄：" + vals.年龄 + "｜性别：" + vals.性别 + "｜身高：" + vals.身高 + "｜体型：" + vals.体型 + "｜外貌：" + vals.外貌 + "｜衣着：" + vals.衣着;
+    }
+    var ok = sendText(msg);
+    var m = document.getElementById("fmsg");
+    var b1 = document.getElementById("btnDefault"), b2 = document.getElementById("btnCustom");
+    if(ok){ if(b1) b1.disabled = true; if(b2) b2.disabled = true; m.className = "fmsg"; m.textContent = "登记信息已发送，系统确认后正式开局…"; }
+    else { m.className = "fmsg bad"; m.textContent = "自动发送失败——请把登记内容手动输入到对话框发送。"; }
+  }
+
+  /* ── 游戏面板：一体折叠 ── */
+  function captureDetails(){
+    ui.det = Array.prototype.map.call(app.querySelectorAll("details"), function(d){ return d.open; });
+  }
+  function restoreDetails(){
+    var ds = app.querySelectorAll("details");
+    for(var i = 0; i < ds.length && i < (ui.det||[]).length; i++) ds[i].open = ui.det[i];
+  }
+  function applyOpen(){
+    var body = document.getElementById("tBody"), term = document.getElementById("term"), caret = document.getElementById("tCaret");
+    if(!body) return;
+    body.style.display = ui.open ? "flex" : "none";
+    if(term) term.classList.toggle("closed", !ui.open);
+    if(caret) caret.textContent = ui.open ? "▾" : "▸";
+  }
+  function stripChip(html){ return '<span class="t-chip">' + html + "</span>"; }
+
+  function renderStatus(d){
+    var w = d.世界, u = d.主角 || {}, bz = safe(d, "别墅", {}), rw = safe(d, "任务", {});
+    var act = safe(w, "当前幕", 1);
+    var opts = safe(d, "选项", []) || [];
+    var ob = "";
+    if(opts.length){
+      ob = '<div class="optbar"><span class="opt-t">下一步</span>';
+      opts.forEach(function(o){
+        o = String(o||"").trim(); if(!o) return;
+        ob += '<span class="opt" data-opt="' + esc(o).replace(/"/g,"&quot;") + '">' + esc(o) + '</span>';
+      });
+      ob += '</div>';
+    }
+    var h = ob + '<div class="term" id="term"><div class="term-head" id="tHead">';
+    h += '<span class="t-badge"><i class="fa fa-terminal"></i> 收租系统</span>';
+    h += '<span class="t-strip">';
+    h += stripChip("<b>第" + safe(w,"日期",1) + "天</b>·" + esc(safe(w,"时段","")));
+    h += stripChip("现金 <b>" + fmt(safe(u,"现金",0)) + "</b>");
+    h += stripChip("累计返利 <b>" + fmt(safe(u,"累计返利",0)) + "</b>");
+    h += stripChip("第" + act + "幕·" + (MENUS[act]||""));
+    h += "</span><span class=\"t-caret\" id=\"tCaret\">▸</span></div>";
+    h += '<div class="term-body" id="tBody">';
+
+    h += '<div class="goal"><b>第' + act + "幕·" + (MENUS[act]||"") + "</b>｜本幕目标：" + esc(GOALS[act]||"") + "</div>";
+    h += renderChecklist(d, act);
+
+    /* 房东 */
+    h += '<div class="sec"><h3><i class="fa fa-user-tie"></i> 房东 · ' + esc(safe(u,"姓名","林野")) + '</h3>';
+    h += '<div class="chips" style="margin-bottom:7px">';
+    h += stripChip(esc(safe(u,"性别","")) + " · " + esc(safe(u,"年龄","")) + "岁");
+    h += stripChip(esc(safe(u,"身高","")));
+    h += stripChip(esc(safe(u,"体型","")));
+    h += "</div>";
+    h += '<div class="meters">';
+    h += '<div class="kv"><div class="k"><i class="fa fa-wallet"></i> 现金</div><div class="v">' + fmt(safe(u,"现金",0)) + "</div></div>";
+    h += '<div class="kv"><div class="k"><i class="fa fa-sack-dollar"></i> 累计返利</div><div class="v">' + fmt(safe(u,"累计返利",0)) + "</div></div>";
+    h += '<div class="kv"><div class="k"><i class="fa fa-bolt"></i> 精力</div>' + bar("", safe(u,"精力",{}).当前值||0, safe(u,"精力",{}).上限||100) + '<div class="sub">' + safe(u,"精力",{}).当前值 + " / " + safe(u,"精力",{}).上限 + "</div></div>";
+    h += '<div class="kv"><div class="k"><i class="fa fa-heart-pulse"></i> 体力</div>' + bar("g", safe(u,"体力",{}).当前值||0, safe(u,"体力",{}).上限||100) + '<div class="sub">' + safe(u,"体力",{}).当前值 + " / " + safe(u,"体力",{}).上限 + "</div></div>";
+    h += "</div>";
+    var pArr = safe(u,"被动技能",[])||[], skN = safe(u,"技能次数",{})||{};
+    var pStr = pArr.map(function(s){ return (skN[s] !== undefined && skN[s] !== null) ? s + "(" + skN[s] + "/3)" : s; }).join("、") || "未解锁";
+    h += '<div class="sub" style="margin-top:7px"><i class="fa fa-star" style="color:var(--c-gold)"></i> 被动技能：' + esc(pStr) + "</div>";
+    var ind = safe(u,"名下产业",{})||{}, ik = Object.keys(ind);
+    if(ik.length){
+      h += '<div class="list" style="margin-top:6px">';
+      ik.forEach(function(k){ h += '<div class="item"><span class="n">' + esc(k) + '</span><span class="d">' + esc(ind[k]) + "</span></div>"; });
+      h += "</div>";
+    }
+    var appts = safe(u,"日程约定",{})||{}, ak = Object.keys(appts);
+    if(ak.length){
+      h += '<div class="list" style="margin-top:6px">';
+      ak.forEach(function(k){ h += '<div class="item"><span class="n">' + esc(k) + '</span><span class="d">' + esc(appts[k]) + "</span></div>"; });
+      h += "</div>";
+    }
+    h += "</div>";
+
+    /* 任务 */
+    var curT = safe(rw,"当前任务",{}), taskHtml = "";
+    if(curT && curT.标题){
+      taskHtml += '<div class="item"><span class="n"><i class="fa fa-bullseye" style="color:var(--c-gold)"></i> ' + esc(curT.标题) + '</span><span class="d">' + esc(safe(curT,"期限","")) + '</span><span class="req">要求：' + esc(safe(curT,"要求","")) + '</span><span class="rwd">奖励：' + esc(safe(curT,"奖励","")) + "</span></div>";
+    } else { taskHtml += '<div class="empty">当前没有系统任务</div>'; }
+    (safe(rw,"任务板",[])||[]).forEach(function(x){
+      taskHtml += '<div class="item"><span class="n">□ ' + esc(safe(x,"标题","")) + '</span><span class="d">' + esc(safe(x,"期限","")) + '</span><span class="req">' + esc(safe(x,"要求","")) + '</span><span class="rwd">' + esc(safe(x,"奖励","")) + "</span></div>";
+    });
+    h += '<div class="sec tasks"><h3><i class="fa fa-list-check"></i> 系统任务</h3>' + taskHtml + "</div>";
+
+    /* 别墅 */
+    h += '<div class="sec"><h3><i class="fa fa-house"></i> 翡翠湾大别墅 <span style="letter-spacing:0">' + esc(safe(w,"当前地点","")) + (safe(w,"天气","")?" · "+esc(w.天气):"") + "</span></h3><div class=\"meters\">";
+    h += '<div class="kv"><div class="k">口碑</div>' + bar("o", safe(bz,"口碑",0), 100) + '<div class="sub">' + safe(bz,"口碑",0) + " / 100</div></div>";
+    h += '<div class="kv"><div class="k">设施等级</div><div class="v c">' + safe(bz,"设施等级",0) + " / 5</div></div>";
+    h += '<div class="kv"><div class="k">空房数</div><div class="v c">' + safe(bz,"空房数",4) + " / 4</div></div>";
+    h += "</div></div>";
+
+    /* 租客：横排名字签，点击名字展开详情 */
+    var chars = safe(d,"角色",{})||{}, keys = Object.keys(chars), ch = "";
+    if(!keys.length){
+      ch = '<div class="empty">尚无租客入住</div>';
+    } else {
+      if(!ui.tSel || keys.indexOf(ui.tSel) < 0) ui.tSel = keys[0];
+      ch += '<div class="t-tabs">';
+      keys.forEach(function(name){
+        var c0 = chars[name]||{};
+        ch += '<span class="t-tab' + (name === ui.tSel ? ' on' : '') + (safe(c0,"在住",false) ? '' : ' out') + '" data-tenant="' + esc(name) + '"><b>' + esc(name) + '</b><i>' + esc(safe(c0,"房间","空置")) + '</i></span>';
+      });
+      ch += '</div>';
+      var nm = ui.tSel;
+      var c = chars[nm]||{}, p = safe(c,"私密档案",{})||{}, bd = safe(p,"身体开发",{})||{};
+      ch += '<div class="tenant"><div class="t-top"><span class="n">' + esc(nm) + (safe(c,"在住",false) ? "" : '<span class="tag">未入住</span>') + '</span><span class="r">' + esc(safe(c,"房间","空置")) + "</span></div>";
+      ch += '<div class="t-meta">情绪 ' + esc(safe(c,"情绪","—")) + " ｜ 欠租 " + fmt(safe(c,"欠租",0)) + " 元 ｜ " + esc(safe(c,"生理期","安全期")) + "</div>";
+      ch += '<div class="sub">好感 ' + safe(c,"好感",0) + "</div>" + bar("p", safe(c,"好感",0), 100);
+      ch += '<div class="sub">堕落 ' + safe(c,"堕落",0) + "</div>" + bar("v", safe(c,"堕落",0), 100);
+      ch += '<div class="t-mental">' + esc(safe(c,"心理想法","")) + "</div>";
+      if(safe(c,"个人目标","")) ch += '<div class="sub">目标：' + esc(c.个人目标) + "</div>";
+      ch += '<details class="pri"><summary>私密档案（敏感内容，点击展开）</summary><div class="pri-grid">';
+      ch += '<div class="kv"><div class="k">初吻 / 初夜</div><div class="sub">' + esc(safe(p,"初吻","未发生")) + " / " + esc(safe(p,"初夜","未发生")) + "</div></div>";
+      ch += '<div class="kv"><div class="k">性交次数</div><div class="v c" style="font-size:14px">' + safe(p,"性交次数",0) + '</div><div class="sub">最近：' + esc(safe(p,"最近性事","无")) + "</div></div>";
+      ch += '</div><div class="sub" style="margin:8px 0 4px">身体开发</div><div class="pri-grid">';
+      ["小嘴","胸部","下身","后穴"].forEach(function(k){
+        ch += '<div class="kv"><div class="k">' + k + "</div>" + bar("v", safe(bd,k,0), 100) + '<div class="sub">' + safe(bd,k,0) + " / 100</div></div>";
+      });
+      ch += "</div></details></div>";
+    }
+    h += '<div class="sec"><h3><i class="fa fa-users"></i> 租客档案</h3>' + ch + "</div>";
+
+    h += '<div class="foot"><span>收租万倍返还 · 终端 v2.0</span><button id="rz" data-act="refresh">手动刷新</button></div>';
+    h += "</div></div>";
+    app.innerHTML = h;
+    applyOpen();
+    restoreDetails();
+  }
+
+  /* ── 刷新调度：登记模式渲染一次后不再重建，保护输入内容 ── */
+  function refresh(){
+    if(busy) return; stage("④ 接口就绪，正在读取变量…"); busy = true;
+    readStat().then(function(d){
+      try {
+        var mode = decideMode(d);
+        if(mode === "form"){
+          if(ui.mode !== "form") renderForm();
+        } else {
+          if(ui.mode === "status") captureDetails();
+          renderStatus(d);
+        }
+        ui.mode = mode;
+      } catch(e){ app.innerHTML = '<div class="err">渲染出错：' + esc(e.message) + "</div>"; }
+      busy = false;
+    });
+  }
+
+  /* 事件委托：绑定在 #app 上，innerHTML 重建后依然有效 */
+  app.addEventListener("click", function(e){
+    var t = e.target;
+    if(t.closest && t.closest("#tHead")){ ui.open = !ui.open; applyOpen(); return; }
+    var op = t.closest && t.closest(".opt");
+    if(op){ var ot = op.getAttribute("data-opt"); if(ot) sendText(ot); return; }
+    var tt = t.closest && t.closest(".t-tab");
+    if(tt){ var nm = tt.getAttribute("data-tenant"); if(nm && ui.tSel !== nm){ ui.tSel = nm; refresh(); } return; }
+    var b = t.closest && t.closest("button[data-act]");
+    if(!b) return;
+    var act = b.getAttribute("data-act");
+    if(act === "refresh") refresh();
+    else if(act === "default") doSubmit(true);
+    else if(act === "custom") doSubmit(false);
+  });
+
+  function boot(){
+    stage("③ 正在检测酒馆助手接口注入…");
+    if(typeof getVariables === "function" || (window.Mvu && window.Mvu.getMvuData)){ refresh(); }
+    else { app.innerHTML = '<div class="notice">等待酒馆助手注入环境…<br><span style="font-size:12px">若超过30秒仍是此行：请在酒馆助手设置里确认已开启前端渲染与脚本注入。</span></div>'; setTimeout(boot, 800); }
+  }
+  boot();
+  setInterval(refresh, 3000);
+  try { if(typeof eventOn === "function") eventOn("variable_updated", refresh); } catch(e){}
+})();
+</script>
+</body>
+</html>
