@@ -29,10 +29,10 @@ body{background:var(--c-bg);color:var(--c-text);font-family:"Sarasa Mono SC","Mi
 .t-chip.m b{color:var(--c-primary)}
 .t-caret{color:var(--c-text-muted);font-size:12px;transition:transform .25s;margin-left:auto}
 .term.closed .t-caret{transform:rotate(-90deg)}
-.optbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
-.opt-t{font-size:11px;color:var(--c-text-muted);white-space:nowrap;letter-spacing:1px}
-.opt{background:var(--c-surface);border:1px solid var(--c-primary);color:var(--c-primary);border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;user-select:none}
-.opt:active{filter:brightness(1.25)}
+.optbar{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.opt{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--c-surface),var(--c-surface-2));border:1px solid var(--c-border);border-left:3px solid var(--c-primary);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--c-text);cursor:pointer;user-select:none;transition:border-color .15s,transform .1s,filter .15s}
+.opt:active{transform:scale(.985);border-left-color:var(--c-accent);filter:brightness(1.15)}
+.opt .n{flex:none;font-style:normal;font-size:11px;font-weight:700;color:var(--c-primary);background:rgba(83,216,255,.12);border-radius:6px;padding:2px 7px;min-width:26px;text-align:center}
 .term-body{padding:10px 12px 12px;border-top:1px solid var(--c-border);display:flex;flex-direction:column;gap:10px}
 .goal{font-size:12px;color:var(--c-text-muted);background:var(--c-surface-2);border-left:3px solid var(--c-primary);border-radius:0 6px 6px 0;padding:5px 9px}
 .goal b{color:var(--c-primary)}
@@ -275,10 +275,12 @@ details.pri summary{font-size:12px;color:var(--c-accent);cursor:pointer;user-sel
     var opts = safe(d, "选项", []) || [];
     var ob = "";
     if(opts.length){
-      ob = '<div class="optbar"><span class="opt-t">下一步</span>';
+      ob = '<div class="optbar">';
+      var on = 0;
       opts.forEach(function(o){
         o = String(o||"").trim(); if(!o) return;
-        ob += '<span class="opt" data-opt="' + esc(o).replace(/"/g,"&quot;") + '">' + esc(o) + '</span>';
+        on++;
+        ob += '<span class="opt" data-opt="' + esc(o).replace(/"/g,"&quot;") + '"><i class="n">' + (on<10?'0'+on:on) + '</i><span>' + esc(o) + '</span></span>';
       });
       ob += '</div>';
     }
@@ -373,7 +375,7 @@ details.pri summary{font-size:12px;color:var(--c-accent);cursor:pointer;user-sel
     }
     h += '<div class="sec"><h3><i class="fa fa-users"></i> 租客档案</h3>' + ch + "</div>";
 
-    h += '<div class="foot"><span>收租万倍返还 · 终端 v2.0</span><button id="rz" data-act="refresh">手动刷新</button></div>';
+    h += '<div class="foot"><span>收租万倍返还 · 终端 v2.0.0</span><button id="rz" data-act="refresh">手动刷新</button></div>';
     h += "</div></div>";
     app.innerHTML = h;
     applyOpen();
