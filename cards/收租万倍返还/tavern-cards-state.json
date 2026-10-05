@@ -1,0 +1,4342 @@
+{
+  "projectName": "收租万倍返还",
+  "worldbookName": "收租万倍返还",
+  "form": "charactercard",
+  "mvu": true,
+  "entryManifest": {
+    "世界观": {
+      "[mvu_plot]世界设定": {
+        "path": "世界书/世界观/世界设定.yaml",
+        "scope": "catalog",
+        "keywords": [],
+        "abstract": "当代真实地理世界总纲：系统是唯一超自然要素，知情纪律与现实细节",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 10
+        }
+      },
+      "[mvu_plot]收租系统规则": {
+        "path": "世界书/世界观/收租系统规则.yaml",
+        "scope": "catalog",
+        "keywords": [
+          "收租系统",
+          "返还系统"
+        ],
+        "abstract": "返还倍数、消费返利、任务、特殊租金、四道幕门槛数值与六项被动解锁表",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 11
+        }
+      }
+    },
+    "扮演准则": {
+      "[mvu_plot]扮演准则": {
+        "path": "世界书/扮演准则/扮演准则.yaml",
+        "scope": "catalog",
+        "rephrase": false,
+        "keywords": [],
+        "abstract": "第三人称限知视角、回复结构与播报格式、爽文群像基调、擦边与硬边界执行",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 20
+        }
+      }
+    },
+    "时间线": {
+      "[mvu_plot]暗线背景": {
+        "path": "世界书/时间线/暗线背景.yaml",
+        "scope": "specific",
+        "part": "history",
+        "keywords": [
+          "玉佩",
+          "王氏秀兰",
+          "宋家"
+        ],
+        "abstract": "宋家保姆托孤、玉佩信物、宋家寻女与索科洛夫失踪的底层时间线",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 30
+        }
+      }
+    },
+    "地理": {
+      "[mvu_plot]翡翠湾大别墅": {
+        "path": "世界书/地理/翡翠湾大别墅.yaml",
+        "scope": "catalog",
+        "part": "region",
+        "keywords": [
+          "翡翠湾",
+          "大别墅",
+          "别墅"
+        ],
+        "abstract": "主舞台：之江翡翠湾三层上叠，格局、现状与改造空间",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 40
+        }
+      },
+      "[mvu_plot]老城街区": {
+        "scope": "specific",
+        "part": "region",
+        "keywords": [
+          "老街区",
+          "小卖部",
+          "烧烤摊"
+        ],
+        "abstract": "第一二幕日常舞台：小卖部、烧烤摊、菜市场、老合租房片区",
+        "contents": [
+          {
+            "content": "@@if getvar(\"stat_data.世界.当前幕\", { defaults: 1 }) <= 2"
+          },
+          {
+            "file": "世界书/地理/老城街区.yaml"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 50
+        }
+      },
+      "[mvu_plot]杭州商圈": {
+        "scope": "specific",
+        "part": "region",
+        "keywords": [
+          "钱江新城",
+          "万象城",
+          "汽车城",
+          "商圈"
+        ],
+        "abstract": "消费打脸主战场：钱江新城、汽车城、万象城、城站步行街",
+        "contents": [
+          {
+            "content": "@@if getvar(\"stat_data.世界.当前幕\", { defaults: 1 }) <= 3"
+          },
+          {
+            "file": "世界书/地理/杭州商圈.yaml"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 60
+        }
+      },
+      "[mvu_plot]临安山村": {
+        "scope": "specific",
+        "part": "region",
+        "keywords": [
+          "临安",
+          "山村",
+          "老宅院"
+        ],
+        "abstract": "第三幕乡土线舞台：老宅院、修路、茶园与村霸风险",
+        "contents": [
+          {
+            "content": "@@if getvar(\"stat_data.世界.当前幕\", { defaults: 1 }) >= 3"
+          },
+          {
+            "file": "世界书/地理/临安山村.yaml"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 70
+        }
+      },
+      "[mvu_plot]月牙湾山庄": {
+        "scope": "specific",
+        "part": "region",
+        "keywords": [
+          "月牙湾",
+          "山庄"
+        ],
+        "abstract": "第四幕产业舞台：山庄格局、业务线、酒窖暗格与矿脉隐患",
+        "contents": [
+          {
+            "content": "@@if getvar(\"stat_data.世界.当前幕\", { defaults: 1 }) >= 4"
+          },
+          {
+            "file": "世界书/地理/月牙湾山庄.yaml"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 80
+        }
+      },
+      "[mvu_plot]上海市": {
+        "scope": "specific",
+        "part": "region",
+        "keywords": [
+          "上海",
+          "西岸",
+          "陆家嘴"
+        ],
+        "abstract": "第五幕决战舞台：西岸产业园、陆家嘴、宋家老宅",
+        "contents": [
+          {
+            "content": "@@if getvar(\"stat_data.世界.当前幕\", { defaults: 1 }) >= 5"
+          },
+          {
+            "file": "世界书/地理/上海市.yaml"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "before_character_definition",
+          "order": 90
+        }
+      }
+    },
+    "角色": {
+      "[mvu_plot]角色速览": {
+        "scope": "catalog",
+        "keywords": [],
+        "abstract": "全员识别索引：六位女主+可选招募+后期可入+房间分配",
+        "contents": [
+          {
+            "content": "---\n<character_catalog>"
+          },
+          {
+            "file": "世界书/角色/角色速览.yaml"
+          },
+          {
+            "content": "</character_catalog>"
+          }
+        ],
+        "position": {
+          "type": "after_character_definition",
+          "order": 100
+        }
+      },
+      "[mvu_plot]苏星彤_基础信息": {
+        "scope": "specific",
+        "part": "basic",
+        "keywords": [
+          "苏星彤",
+          "彤姐",
+          "星彤"
+        ],
+        "abstract": "苏星彤基础档案：19岁小妹团老大姐，黑省人，三色高马尾与青龙猛虎纹身",
+        "contents": [
+          {
+            "content": "---\n<character_basic character=\"苏星彤\">"
+          },
+          {
+            "file": "世界书/角色/苏星彤/基础信息.yaml"
+          },
+          {
+            "content": "</character_basic>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "苏星彤",
+            "彤姐",
+            "星彤"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 101
+        }
+      },
+      "[mvu_plot]宋小惠_基础信息": {
+        "scope": "specific",
+        "part": "basic",
+        "keywords": [
+          "宋小惠",
+          "小惠",
+          "惠姐"
+        ],
+        "abstract": "宋小惠基础档案：19岁软糯贪吃跟班，黄玉瑞兽佩与身世悬念",
+        "contents": [
+          {
+            "content": "---\n<character_basic character=\"宋小惠\">"
+          },
+          {
+            "file": "世界书/角色/宋小惠/基础信息.yaml"
+          },
+          {
+            "content": "</character_basic>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "宋小惠",
+            "小惠",
+            "惠姐"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 102
+        }
+      },
+      "[mvu_plot]沈嘉欣_基础信息": {
+        "scope": "specific",
+        "part": "basic",
+        "keywords": [
+          "沈嘉欣",
+          "嘉欣"
+        ],
+        "abstract": "沈嘉欣基础档案：19岁账房军师，清冷低调，刘海与账本是标志",
+        "contents": [
+          {
+            "content": "---\n<character_basic character=\"沈嘉欣\">"
+          },
+          {
+            "file": "世界书/角色/沈嘉欣/基础信息.yaml"
+          },
+          {
+            "content": "</character_basic>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "沈嘉欣",
+            "嘉欣"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 103
+        }
+      },
+      "[mvu_plot]陈小雯_基础信息": {
+        "scope": "specific",
+        "part": "basic",
+        "keywords": [
+          "陈小雯",
+          "小雯"
+        ],
+        "abstract": "陈小雯基础档案：19岁双胞胎姐姐，绿毛，榫卯手艺与护妹执念",
+        "contents": [
+          {
+            "content": "---\n<character_basic character=\"陈小雯\">"
+          },
+          {
+            "file": "世界书/角色/陈小雯/基础信息.yaml"
+          },
+          {
+            "content": "</character_basic>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "陈小雯",
+            "小雯"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 104
+        }
+      },
+      "[mvu_plot]陈小薇_基础信息": {
+        "scope": "specific",
+        "part": "basic",
+        "keywords": [
+          "陈小薇",
+          "小薇"
+        ],
+        "abstract": "陈小薇基础档案：19岁双胞胎妹妹，粉毛，银脚链遗物与安静手巧",
+        "contents": [
+          {
+            "content": "---\n<character_basic character=\"陈小薇\">"
+          },
+          {
+            "file": "世界书/角色/陈小薇/基础信息.yaml"
+          },
+          {
+            "content": "</character_basic>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "陈小薇",
+            "小薇"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 105
+        }
+      },
+      "[mvu_plot]林小鹿_基础信息": {
+        "scope": "specific",
+        "part": "basic",
+        "keywords": [
+          "林小鹿",
+          "小鹿"
+        ],
+        "abstract": "林小鹿基础档案：22岁要强职场新人，可选招募租客，被二房东坑过的维权狠人",
+        "contents": [
+          {
+            "content": "---\n<character_basic character=\"林小鹿\">"
+          },
+          {
+            "file": "世界书/角色/林小鹿/基础信息.yaml"
+          },
+          {
+            "content": "</character_basic>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "林小鹿",
+            "小鹿"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 106
+        }
+      },
+      "[mvu_plot]苏星彤_性格调色盘": {
+        "scope": "specific",
+        "part": "personality",
+        "keywords": [
+          "苏星彤",
+          "彤姐",
+          "星彤"
+        ],
+        "abstract": "苏星彤四阶段调色盘：重情义底色+嘴炮试探到主动黏人的演变，含二次解释",
+        "contents": [
+          {
+            "content": "---\n<character_palette character=\"苏星彤\">"
+          },
+          {
+            "file": "世界书/角色/苏星彤/性格调色盘.txt"
+          },
+          {
+            "content": "</character_palette>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "苏星彤",
+            "彤姐",
+            "星彤"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 107
+        }
+      },
+      "[mvu_plot]宋小惠_性格调色盘": {
+        "scope": "specific",
+        "part": "personality",
+        "keywords": [
+          "宋小惠",
+          "小惠",
+          "惠姐"
+        ],
+        "abstract": "宋小惠四阶段调色盘：天然无害底色，第四阶段为身世期（幕节点优先）",
+        "contents": [
+          {
+            "content": "---\n<character_palette character=\"宋小惠\">"
+          },
+          {
+            "file": "世界书/角色/宋小惠/性格调色盘.txt"
+          },
+          {
+            "content": "</character_palette>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "宋小惠",
+            "小惠",
+            "惠姐"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 108
+        }
+      },
+      "[mvu_plot]沈嘉欣_性格调色盘": {
+        "scope": "specific",
+        "part": "personality",
+        "keywords": [
+          "沈嘉欣",
+          "嘉欣"
+        ],
+        "abstract": "沈嘉欣四阶段调色盘：清醒底色，审视到沉沦的失控与克制",
+        "contents": [
+          {
+            "content": "---\n<character_palette character=\"沈嘉欣\">"
+          },
+          {
+            "file": "世界书/角色/沈嘉欣/性格调色盘.txt"
+          },
+          {
+            "content": "</character_palette>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "沈嘉欣",
+            "嘉欣"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 109
+        }
+      },
+      "[mvu_plot]陈小雯_性格调色盘": {
+        "scope": "specific",
+        "part": "personality",
+        "keywords": [
+          "陈小雯",
+          "小雯"
+        ],
+        "abstract": "陈小雯四阶段调色盘：护妹底色，规矩拘谨到直球主动",
+        "contents": [
+          {
+            "content": "---\n<character_palette character=\"陈小雯\">"
+          },
+          {
+            "file": "世界书/角色/陈小雯/性格调色盘.txt"
+          },
+          {
+            "content": "</character_palette>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "陈小雯",
+            "小雯"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 110
+        }
+      },
+      "[mvu_plot]陈小薇_性格调色盘": {
+        "scope": "specific",
+        "part": "personality",
+        "keywords": [
+          "陈小薇",
+          "小薇"
+        ],
+        "abstract": "陈小薇四阶段调色盘：内秀底色，躲闪观察到暗中主动",
+        "contents": [
+          {
+            "content": "---\n<character_palette character=\"陈小薇\">"
+          },
+          {
+            "file": "世界书/角色/陈小薇/性格调色盘.txt"
+          },
+          {
+            "content": "</character_palette>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "陈小薇",
+            "小薇"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 111
+        }
+      },
+      "[mvu_plot]林小鹿_性格调色盘": {
+        "scope": "specific",
+        "part": "personality",
+        "keywords": [
+          "林小鹿",
+          "小鹿"
+        ],
+        "abstract": "林小鹿四阶段调色盘：自立要强底色，戒备到缴械的反差；未收编时整条目隐匿",
+        "contents": [
+          {
+            "content": "---\n<character_palette character=\"林小鹿\">"
+          },
+          {
+            "file": "世界书/角色/林小鹿/性格调色盘.txt"
+          },
+          {
+            "content": "</character_palette>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "林小鹿",
+            "小鹿"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 112
+        }
+      }
+    },
+    "NPC": {
+      "[mvu_plot]街坊NPC速览": {
+        "scope": "catalog",
+        "keywords": [
+          "周婶",
+          "小卖部",
+          "中介",
+          "物业"
+        ],
+        "abstract": "周婶、老陈、老马、中介小吴、物业老张五个日常NPC的功能与语料",
+        "contents": [
+          {
+            "content": "---\n<npc_catalog>"
+          },
+          {
+            "file": "世界书/NPC/街坊NPC速览.yaml"
+          },
+          {
+            "content": "</npc_catalog>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 120
+        }
+      },
+      "[mvu_plot]同行对手速览": {
+        "scope": "specific",
+        "keywords": [
+          "钱志国",
+          "赵阔",
+          "张守义",
+          "金鼎传媒",
+          "鼎盛娱乐"
+        ],
+        "abstract": "钱志国、赵阔、张守义三个商战反派的功能与语料",
+        "contents": [
+          {
+            "content": "---\n<npc_catalog type=\"rivals\">"
+          },
+          {
+            "file": "世界书/NPC/同行对手速览.yaml"
+          },
+          {
+            "content": "</npc_catalog>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "钱志国",
+            "赵阔",
+            "张守义",
+            "金鼎传媒",
+            "鼎盛娱乐"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 121
+        }
+      },
+      "[mvu_plot]幕后势力速览": {
+        "scope": "specific",
+        "keywords": [
+          "宋家",
+          "李家",
+          "索科洛夫",
+          "管家"
+        ],
+        "abstract": "宋管家、宋先生、李家管事、索科洛夫四个幕后线人物",
+        "contents": [
+          {
+            "content": "@@if getvar(\"stat_data.世界.当前幕\", { defaults: 1 }) >= 3"
+          },
+          {
+            "content": "---\n<npc_catalog type=\"behind\">"
+          },
+          {
+            "file": "世界书/NPC/幕后势力速览.yaml"
+          },
+          {
+            "content": "</npc_catalog>"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "宋家",
+            "李家",
+            "索科洛夫",
+            "管家"
+          ]
+        },
+        "position": {
+          "type": "after_character_definition",
+          "order": 122
+        }
+      }
+    },
+    "阶段指导": {
+      "[mvu_plot]章节锁主持": {
+        "scope": "catalog",
+        "keywords": [],
+        "abstract": "按世界.日期和当前节点给正文模型的章节锁提示，不发给更新模型",
+        "contents": [
+          {
+            "file": "世界书/阶段指导/阶段指导.txt"
+          }
+        ],
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 0,
+          "order": 130
+        }
+      }
+    },
+    "事件": {
+      "突发事件与反派模板": {
+        "path": "世界书/事件/突发事件与反派模板.yaml",
+        "scope": "specific",
+        "keywords": [
+          "突发事件",
+          "收编"
+        ],
+        "abstract": "旧突发事件模板，章节锁启用后停用",
+        "enabled": false,
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "突发事件",
+            "收编"
+          ]
+        },
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 0,
+          "order": 140
+        }
+      },
+      "剧情纪律": {
+        "path": "世界书/事件/剧情纪律.yaml",
+        "keywords": [],
+        "abstract": "章节锁纪律：只演当前章，禁止重生穿越，禁止改调度字段",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 125
+        },
+        "strategy": {
+          "type": "constant"
+        },
+        "scope": "catalog"
+      },
+      "主线事件节点表": {
+        "path": "世界书/事件/主线事件节点表.txt",
+        "keywords": [],
+        "abstract": "第1至150章时间锁，调度器按世界.日期写入当前事件",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 126
+        },
+        "strategy": {
+          "type": "constant"
+        },
+        "scope": "catalog"
+      },
+      "[mvu_plot]事件详情_01_收租万倍返还？": {
+        "path": "世界书/事件/01_收租万倍返还？.txt",
+        "keywords": [
+          "01_收租万倍返还？"
+        ],
+        "abstract": "原著事件详情：01_收租万倍返还？",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 200
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "01_收租万倍返还？"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_02_叔，你不会是想磕我吧！": {
+        "path": "世界书/事件/02_叔，你不会是想磕我吧！.txt",
+        "keywords": [
+          "02_叔，你不会是想磕我吧！"
+        ],
+        "abstract": "原著事件详情：02_叔，你不会是想磕我吧！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 201
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "02_叔，你不会是想磕我吧！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_03_成大事者不惧小姐，更何况我是小妹": {
+        "path": "世界书/事件/03_成大事者不惧小姐，更何况我是小妹.txt",
+        "keywords": [
+          "03_成大事者不惧小姐，更何况我是小妹"
+        ],
+        "abstract": "原著事件详情：03_成大事者不惧小姐，更何况我是小妹",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 202
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "03_成大事者不惧小姐，更何况我是小妹"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_04_三英战老娘": {
+        "path": "世界书/事件/04_三英战老娘.txt",
+        "keywords": [
+          "04_三英战老娘"
+        ],
+        "abstract": "原著事件详情：04_三英战老娘",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 203
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "04_三英战老娘"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_05_这精神小妹能处，有事儿真上啊": {
+        "path": "世界书/事件/05_这精神小妹能处，有事儿真上啊.txt",
+        "keywords": [
+          "05_这精神小妹能处，有事儿真上啊"
+        ],
+        "abstract": "原著事件详情：05_这精神小妹能处，有事儿真上啊",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 204
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "05_这精神小妹能处，有事儿真上啊"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_06_三个臭皮匠！": {
+        "path": "世界书/事件/06_三个臭皮匠！.txt",
+        "keywords": [
+          "06_三个臭皮匠！"
+        ],
+        "abstract": "原著事件详情：06_三个臭皮匠！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 205
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "06_三个臭皮匠！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_07_收租黑丝！奖励……": {
+        "path": "世界书/事件/07_收租黑丝！奖励…….txt",
+        "keywords": [
+          "07_收租黑丝！奖励……"
+        ],
+        "abstract": "原著事件详情：07_收租黑丝！奖励……",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 206
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "07_收租黑丝！奖励……"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_08_叔，实在不行我让你磕一下吧？": {
+        "path": "世界书/事件/08_叔，实在不行我让你磕一下吧？.txt",
+        "keywords": [
+          "08_叔，实在不行我让你磕一下吧？"
+        ],
+        "abstract": "原著事件详情：08_叔，实在不行我让你磕一下吧？",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 207
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "08_叔，实在不行我让你磕一下吧？"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_09_这是嘎哈呢，你们真是害苦了我啊！": {
+        "path": "世界书/事件/09_这是嘎哈呢，你们真是害苦了我啊！.txt",
+        "keywords": [
+          "09_这是嘎哈呢，你们真是害苦了我啊！"
+        ],
+        "abstract": "原著事件详情：09_这是嘎哈呢，你们真是害苦了我啊！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 208
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "09_这是嘎哈呢，你们真是害苦了我啊！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_100_双胞胎的秘密，家族的荣光": {
+        "path": "世界书/事件/100_双胞胎的秘密，家族的荣光.txt",
+        "keywords": [
+          "100_双胞胎的秘密，家族的荣光"
+        ],
+        "abstract": "原著事件详情：100_双胞胎的秘密，家族的荣光",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 209
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "100_双胞胎的秘密，家族的荣光"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_101_安娜的生父，俄罗斯寡头": {
+        "path": "世界书/事件/101_安娜的生父，俄罗斯寡头.txt",
+        "keywords": [
+          "101_安娜的生父，俄罗斯寡头"
+        ],
+        "abstract": "原著事件详情：101_安娜的生父，俄罗斯寡头",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 210
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "101_安娜的生父，俄罗斯寡头"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_102_财阀的低头，跨国连线": {
+        "path": "世界书/事件/102_财阀的低头，跨国连线.txt",
+        "keywords": [
+          "102_财阀的低头，跨国连线"
+        ],
+        "abstract": "原著事件详情：102_财阀的低头，跨国连线",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 211
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "102_财阀的低头，跨国连线"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_103_宋家的终局，雷霆手段": {
+        "path": "世界书/事件/103_宋家的终局，雷霆手段.txt",
+        "keywords": [
+          "103_宋家的终局，雷霆手段"
+        ],
+        "abstract": "原著事件详情：103_宋家的终局，雷霆手段",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 212
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "103_宋家的终局，雷霆手段"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_104_同学会的终极打脸，张强归来": {
+        "path": "世界书/事件/104_同学会的终极打脸，张强归来.txt",
+        "keywords": [
+          "104_同学会的终极打脸，张强归来"
+        ],
+        "abstract": "原著事件详情：104_同学会的终极打脸，张强归来",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 213
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "104_同学会的终极打脸，张强归来"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_105_祖宅钥匙，二舅要当新家主": {
+        "path": "世界书/事件/105_祖宅钥匙，二舅要当新家主.txt",
+        "keywords": [
+          "105_祖宅钥匙，二舅要当新家主"
+        ],
+        "abstract": "原著事件详情：105_祖宅钥匙，二舅要当新家主",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 214
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "105_祖宅钥匙，二舅要当新家主"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_106_铁盒里的照片，谁在冒充王家恩人": {
+        "path": "世界书/事件/106_铁盒里的照片，谁在冒充王家恩人.txt",
+        "keywords": [
+          "106_铁盒里的照片，谁在冒充王家恩人"
+        ],
+        "abstract": "原著事件详情：106_铁盒里的照片，谁在冒充王家恩人",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 215
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "106_铁盒里的照片，谁在冒充王家恩人"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_107_村口认亲宴，张婶请来个假富豪": {
+        "path": "世界书/事件/107_村口认亲宴，张婶请来个假富豪.txt",
+        "keywords": [
+          "107_村口认亲宴，张婶请来个假富豪"
+        ],
+        "abstract": "原著事件详情：107_村口认亲宴，张婶请来个假富豪",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 216
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "107_村口认亲宴，张婶请来个假富豪"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_108_三十亩菜地，谁敢拿走林家的钱": {
+        "path": "世界书/事件/108_三十亩菜地，谁敢拿走林家的钱.txt",
+        "keywords": [
+          "108_三十亩菜地，谁敢拿走林家的钱"
+        ],
+        "abstract": "原著事件详情：108_三十亩菜地，谁敢拿走林家的钱",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 217
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "108_三十亩菜地，谁敢拿走林家的钱"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_109_拆迁队进村，林野一脚踹翻推土机": {
+        "path": "世界书/事件/109_拆迁队进村，林野一脚踹翻推土机.txt",
+        "keywords": [
+          "109_拆迁队进村，林野一脚踹翻推土机"
+        ],
+        "abstract": "原著事件详情：109_拆迁队进村，林野一脚踹翻推土机",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 218
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "109_拆迁队进村，林野一脚踹翻推土机"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_10_你这个上个世纪的老古董，怎么一点都不封建啊": {
+        "path": "世界书/事件/10_你这个上个世纪的老古董，怎么一点都不封建啊.txt",
+        "keywords": [
+          "10_你这个上个世纪的老古董，怎么一点都不封建啊"
+        ],
+        "abstract": "原著事件详情：10_你这个上个世纪的老古董，怎么一点都不封建啊",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 219
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "10_你这个上个世纪的老古董，怎么一点都不封建啊"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_110_祖坟后山，二舅跪求分一杯羹": {
+        "path": "世界书/事件/110_祖坟后山，二舅跪求分一杯羹.txt",
+        "keywords": [
+          "110_祖坟后山，二舅跪求分一杯羹"
+        ],
+        "abstract": "原著事件详情：110_祖坟后山，二舅跪求分一杯羹",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 220
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "110_祖坟后山，二舅跪求分一杯羹"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_111_一口枯井，挖出王海的发财梦": {
+        "path": "世界书/事件/111_一口枯井，挖出王海的发财梦.txt",
+        "keywords": [
+          "111_一口枯井，挖出王海的发财梦"
+        ],
+        "abstract": "原著事件详情：111_一口枯井，挖出王海的发财梦",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 221
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "111_一口枯井，挖出王海的发财梦"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_112_转运徽章，王海又要分红": {
+        "path": "世界书/事件/112_转运徽章，王海又要分红.txt",
+        "keywords": [
+          "112_转运徽章，王海又要分红"
+        ],
+        "abstract": "原著事件详情：112_转运徽章，王海又要分红",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 222
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "112_转运徽章，王海又要分红"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_113_族谱开会，三舅公坐龙椅": {
+        "path": "世界书/事件/113_族谱开会，三舅公坐龙椅.txt",
+        "keywords": [
+          "113_族谱开会，三舅公坐龙椅"
+        ],
+        "abstract": "原著事件详情：113_族谱开会，三舅公坐龙椅",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 223
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "113_族谱开会，三舅公坐龙椅"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_114_港商进村，三百万买族谱": {
+        "path": "世界书/事件/114_港商进村，三百万买族谱.txt",
+        "keywords": [
+          "114_港商进村，三百万买族谱"
+        ],
+        "abstract": "原著事件详情：114_港商进村，三百万买族谱",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 224
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "114_港商进村，三百万买族谱"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_115_百桌认亲，欠债亲戚排长队": {
+        "path": "世界书/事件/115_百桌认亲，欠债亲戚排长队.txt",
+        "keywords": [
+          "115_百桌认亲，欠债亲戚排长队"
+        ],
+        "abstract": "原著事件详情：115_百桌认亲，欠债亲戚排长队",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 225
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "115_百桌认亲，欠债亲戚排长队"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_116_粮站抢仓，亲戚抡起铁锹": {
+        "path": "世界书/事件/116_粮站抢仓，亲戚抡起铁锹.txt",
+        "keywords": [
+          "116_粮站抢仓，亲戚抡起铁锹"
+        ],
+        "abstract": "原著事件详情：116_粮站抢仓，亲戚抡起铁锹",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 226
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "116_粮站抢仓，亲戚抡起铁锹"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_117_毒气封仓，假港商偷走铁箱": {
+        "path": "世界书/事件/117_毒气封仓，假港商偷走铁箱.txt",
+        "keywords": [
+          "117_毒气封仓，假港商偷走铁箱"
+        ],
+        "abstract": "原著事件详情：117_毒气封仓，假港商偷走铁箱",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 227
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "117_毒气封仓，假港商偷走铁箱"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_118_山路截车，一拳打碎发财梦": {
+        "path": "世界书/事件/118_山路截车，一拳打碎发财梦.txt",
+        "keywords": [
+          "118_山路截车，一拳打碎发财梦"
+        ],
+        "abstract": "原著事件详情：118_山路截车，一拳打碎发财梦",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 228
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "118_山路截车，一拳打碎发财梦"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_119_零七开箱，百亿基金现原形": {
+        "path": "世界书/事件/119_零七开箱，百亿基金现原形.txt",
+        "keywords": [
+          "119_零七开箱，百亿基金现原形"
+        ],
+        "abstract": "原著事件详情：119_零七开箱，百亿基金现原形",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 229
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "119_零七开箱，百亿基金现原形"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_11_叔，你搁着养死士呢？": {
+        "path": "世界书/事件/11_叔，你搁着养死士呢？.txt",
+        "keywords": [
+          "11_叔，你搁着养死士呢？"
+        ],
+        "abstract": "原著事件详情：11_叔，你搁着养死士呢？",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 230
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "11_叔，你搁着养死士呢？"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_120_亲戚散席，王海承包村口厕所": {
+        "path": "世界书/事件/120_亲戚散席，王海承包村口厕所.txt",
+        "keywords": [
+          "120_亲戚散席，王海承包村口厕所"
+        ],
+        "abstract": "原著事件详情：120_亲戚散席，王海承包村口厕所",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 231
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "120_亲戚散席，王海承包村口厕所"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_121_慈恩旧址，拍卖场上掀桌": {
+        "path": "世界书/事件/121_慈恩旧址，拍卖场上掀桌.txt",
+        "keywords": [
+          "121_慈恩旧址，拍卖场上掀桌"
+        ],
+        "abstract": "原著事件详情：121_慈恩旧址，拍卖场上掀桌",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 232
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "121_慈恩旧址，拍卖场上掀桌"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_122_地下档案，第二个孩子": {
+        "path": "世界书/事件/122_地下档案，第二个孩子.txt",
+        "keywords": [
+          "122_地下档案，第二个孩子"
+        ],
+        "abstract": "原著事件详情：122_地下档案，第二个孩子",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 233
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "122_地下档案，第二个孩子"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_123_钟表铺前，拆迁队砸门": {
+        "path": "世界书/事件/123_钟表铺前，拆迁队砸门.txt",
+        "keywords": [
+          "123_钟表铺前，拆迁队砸门"
+        ],
+        "abstract": "原著事件详情：123_钟表铺前，拆迁队砸门",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 234
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "123_钟表铺前，拆迁队砸门"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_124_九间旺铺，租约砸脸": {
+        "path": "世界书/事件/124_九间旺铺，租约砸脸.txt",
+        "keywords": [
+          "124_九间旺铺，租约砸脸"
+        ],
+        "abstract": "原著事件详情：124_九间旺铺，租约砸脸",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 235
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "124_九间旺铺，租约砸脸"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_125_青年公寓，租客全是人才": {
+        "path": "世界书/事件/125_青年公寓，租客全是人才.txt",
+        "keywords": [
+          "125_青年公寓，租客全是人才"
+        ],
+        "abstract": "原著事件详情：125_青年公寓，租客全是人才",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 236
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "125_青年公寓，租客全是人才"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_126_车库暗门，李怀安的账": {
+        "path": "世界书/事件/126_车库暗门，李怀安的账.txt",
+        "keywords": [
+          "126_车库暗门，李怀安的账"
+        ],
+        "abstract": "原著事件详情：126_车库暗门，李怀安的账",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 237
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "126_车库暗门，李怀安的账"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_127_冷链仓库，现金砸穿黑幕": {
+        "path": "世界书/事件/127_冷链仓库，现金砸穿黑幕.txt",
+        "keywords": [
+          "127_冷链仓库，现金砸穿黑幕"
+        ],
+        "abstract": "原著事件详情：127_冷链仓库，现金砸穿黑幕",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 238
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "127_冷链仓库，现金砸穿黑幕"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_128_母亲旧录音，李家要封城": {
+        "path": "世界书/事件/128_母亲旧录音，李家要封城.txt",
+        "keywords": [
+          "128_母亲旧录音，李家要封城"
+        ],
+        "abstract": "原著事件详情：128_母亲旧录音，李家要封城",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 239
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "128_母亲旧录音，李家要封城"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_129_物流站前，债主跪求合作": {
+        "path": "世界书/事件/129_物流站前，债主跪求合作.txt",
+        "keywords": [
+          "129_物流站前，债主跪求合作"
+        ],
+        "abstract": "原著事件详情：129_物流站前，债主跪求合作",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 240
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "129_物流站前，债主跪求合作"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_12_叔，你要喜欢，裹扎都行": {
+        "path": "世界书/事件/12_叔，你要喜欢，裹扎都行.txt",
+        "keywords": [
+          "12_叔，你要喜欢，裹扎都行"
+        ],
+        "abstract": "原著事件详情：12_叔，你要喜欢，裹扎都行",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 241
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "12_叔，你要喜欢，裹扎都行"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_130_县城新街，林若棠现身": {
+        "path": "世界书/事件/130_县城新街，林若棠现身.txt",
+        "keywords": [
+          "130_县城新街，林若棠现身"
+        ],
+        "abstract": "原著事件详情：130_县城新街，林若棠现身",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 242
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "130_县城新街，林若棠现身"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_131_四街连营，三天开城": {
+        "path": "世界书/事件/131_四街连营，三天开城.txt",
+        "keywords": [
+          "131_四街连营，三天开城"
+        ],
+        "abstract": "原著事件详情：131_四街连营，三天开城",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 243
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "131_四街连营，三天开城"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_132_女设计师，图纸拍桌": {
+        "path": "世界书/事件/132_女设计师，图纸拍桌.txt",
+        "keywords": [
+          "132_女设计师，图纸拍桌"
+        ],
+        "abstract": "原著事件详情：132_女设计师，图纸拍桌",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 244
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "132_女设计师，图纸拍桌"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_133_夜闯总闸，钢钳断手": {
+        "path": "世界书/事件/133_夜闯总闸，钢钳断手.txt",
+        "keywords": [
+          "133_夜闯总闸，钢钳断手"
+        ],
+        "abstract": "原著事件详情：133_夜闯总闸，钢钳断手",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 245
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "133_夜闯总闸，钢钳断手"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_134_银行抽贷，账本迎客": {
+        "path": "世界书/事件/134_银行抽贷，账本迎客.txt",
+        "keywords": [
+          "134_银行抽贷，账本迎客"
+        ],
+        "abstract": "原著事件详情：134_银行抽贷，账本迎客",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 246
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "134_银行抽贷，账本迎客"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_135_旧款翻账，行长冒汗": {
+        "path": "世界书/事件/135_旧款翻账，行长冒汗.txt",
+        "keywords": [
+          "135_旧款翻账，行长冒汗"
+        ],
+        "abstract": "原著事件详情：135_旧款翻账，行长冒汗",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 247
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "135_旧款翻账，行长冒汗"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_136_一纸旧约，四街停工": {
+        "path": "世界书/事件/136_一纸旧约，四街停工.txt",
+        "keywords": [
+          "136_一纸旧约，四街停工"
+        ],
+        "abstract": "原著事件详情：136_一纸旧约，四街停工",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 248
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "136_一纸旧约，四街停工"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_137_母亲进城，谁敢跟车": {
+        "path": "世界书/事件/137_母亲进城，谁敢跟车.txt",
+        "keywords": [
+          "137_母亲进城，谁敢跟车"
+        ],
+        "abstract": "原著事件详情：137_母亲进城，谁敢跟车",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 249
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "137_母亲进城，谁敢跟车"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_138_地下二层，空柜藏人": {
+        "path": "世界书/事件/138_地下二层，空柜藏人.txt",
+        "keywords": [
+          "138_地下二层，空柜藏人"
+        ],
+        "abstract": "原著事件详情：138_地下二层，空柜藏人",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 250
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "138_地下二层，空柜藏人"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_139_假账真名，姐姐背锅": {
+        "path": "世界书/事件/139_假账真名，姐姐背锅.txt",
+        "keywords": [
+          "139_假账真名，姐姐背锅"
+        ],
+        "abstract": "原著事件详情：139_假账真名，姐姐背锅",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 251
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "139_假账真名，姐姐背锅"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_13_姐妹花抵租，楼上楼下都是家": {
+        "path": "世界书/事件/13_姐妹花抵租，楼上楼下都是家.txt",
+        "keywords": [
+          "13_姐妹花抵租，楼上楼下都是家"
+        ],
+        "abstract": "原著事件详情：13_姐妹花抵租，楼上楼下都是家",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 252
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "13_姐妹花抵租，楼上楼下都是家"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_140_老狐狸回城，万人赴街": {
+        "path": "世界书/事件/140_老狐狸回城，万人赴街.txt",
+        "keywords": [
+          "140_老狐狸回城，万人赴街"
+        ],
+        "abstract": "原著事件详情：140_老狐狸回城，万人赴街",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 253
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "140_老狐狸回城，万人赴街"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_141_全城断电，万人困街": {
+        "path": "世界书/事件/141_全城断电，万人困街.txt",
+        "keywords": [
+          "141_全城断电，万人困街"
+        ],
+        "abstract": "原著事件详情：141_全城断电，万人困街",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 254
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "141_全城断电，万人困街"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_142_蒸汽顶门，林野下井": {
+        "path": "世界书/事件/142_蒸汽顶门，林野下井.txt",
+        "keywords": [
+          "142_蒸汽顶门，林野下井"
+        ],
+        "abstract": "原著事件详情：142_蒸汽顶门，林野下井",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 255
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "142_蒸汽顶门，林野下井"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_143_保险库里，行长开门": {
+        "path": "世界书/事件/143_保险库里，行长开门.txt",
+        "keywords": [
+          "143_保险库里，行长开门"
+        ],
+        "abstract": "原著事件详情：143_保险库里，行长开门",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 256
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "143_保险库里，行长开门"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_144_双锁合一，姐妹过桥": {
+        "path": "世界书/事件/144_双锁合一，姐妹过桥.txt",
+        "keywords": [
+          "144_双锁合一，姐妹过桥"
+        ],
+        "abstract": "原著事件详情：144_双锁合一，姐妹过桥",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 257
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "144_双锁合一，姐妹过桥"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_145_董事长登台，旧账开屏": {
+        "path": "世界书/事件/145_董事长登台，旧账开屏.txt",
+        "keywords": [
+          "145_董事长登台，旧账开屏"
+        ],
+        "abstract": "原著事件详情：145_董事长登台，旧账开屏",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 258
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "145_董事长登台，旧账开屏"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_146_四街开城，李家塌台": {
+        "path": "世界书/事件/146_四街开城，李家塌台.txt",
+        "keywords": [
+          "146_四街开城，李家塌台"
+        ],
+        "abstract": "原著事件详情：146_四街开城，李家塌台",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 259
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "146_四街开城，李家塌台"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_147_商务楼前，粉发女夺刀": {
+        "path": "世界书/事件/147_商务楼前，粉发女夺刀.txt",
+        "keywords": [
+          "147_商务楼前，粉发女夺刀"
+        ],
+        "abstract": "原著事件详情：147_商务楼前，粉发女夺刀",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 260
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "147_商务楼前，粉发女夺刀"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_148_破旧电脑，狂飙祖安话": {
+        "path": "世界书/事件/148_破旧电脑，狂飙祖安话.txt",
+        "keywords": [
+          "148_破旧电脑，狂飙祖安话"
+        ],
+        "abstract": "原著事件详情：148_破旧电脑，狂飙祖安话",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 261
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "148_破旧电脑，狂飙祖安话"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_149_午夜路边，烤串配啤酒": {
+        "path": "世界书/事件/149_午夜路边，烤串配啤酒.txt",
+        "keywords": [
+          "149_午夜路边，烤串配啤酒"
+        ],
+        "abstract": "原著事件详情：149_午夜路边，烤串配啤酒",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 262
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "149_午夜路边，烤串配啤酒"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_14_精神小妹反围猎": {
+        "path": "世界书/事件/14_精神小妹反围猎.txt",
+        "keywords": [
+          "14_精神小妹反围猎"
+        ],
+        "abstract": "原著事件详情：14_精神小妹反围猎",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 263
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "14_精神小妹反围猎"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_150_高端酒局，豆豆鞋入场": {
+        "path": "世界书/事件/150_高端酒局，豆豆鞋入场.txt",
+        "keywords": [
+          "150_高端酒局，豆豆鞋入场"
+        ],
+        "abstract": "原著事件详情：150_高端酒局，豆豆鞋入场",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 264
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "150_高端酒局，豆豆鞋入场"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_15_精神小妹五打一，地中海血亏出局": {
+        "path": "世界书/事件/15_精神小妹五打一，地中海血亏出局.txt",
+        "keywords": [
+          "15_精神小妹五打一，地中海血亏出局"
+        ],
+        "abstract": "原著事件详情：15_精神小妹五打一，地中海血亏出局",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 265
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "15_精神小妹五打一，地中海血亏出局"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_16_精神小妹硬砍价， 砍价砍到老板叫妈": {
+        "path": "世界书/事件/16_精神小妹硬砍价， 砍价砍到老板叫妈.txt",
+        "keywords": [
+          "16_精神小妹硬砍价， 砍价砍到老板叫妈"
+        ],
+        "abstract": "原著事件详情：16_精神小妹硬砍价， 砍价砍到老板叫妈",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 266
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "16_精神小妹硬砍价， 砍价砍到老板叫妈"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_17_小惠夜袭，别墅加装电梯提上日程": {
+        "path": "世界书/事件/17_小惠夜袭，别墅加装电梯提上日程.txt",
+        "keywords": [
+          "17_小惠夜袭，别墅加装电梯提上日程"
+        ],
+        "abstract": "原著事件详情：17_小惠夜袭，别墅加装电梯提上日程",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 267
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "17_小惠夜袭，别墅加装电梯提上日程"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_18_星耀传媒，新官上任第一把火": {
+        "path": "世界书/事件/18_星耀传媒，新官上任第一把火.txt",
+        "keywords": [
+          "18_星耀传媒，新官上任第一把火"
+        ],
+        "abstract": "原著事件详情：18_星耀传媒，新官上任第一把火",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 268
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "18_星耀传媒，新官上任第一把火"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_19_全员加薪，一姐逼宫": {
+        "path": "世界书/事件/19_全员加薪，一姐逼宫.txt",
+        "keywords": [
+          "19_全员加薪，一姐逼宫"
+        ],
+        "abstract": "原著事件详情：19_全员加薪，一姐逼宫",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 269
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "19_全员加薪，一姐逼宫"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_20_凯雷德，给我来辆最贵的": {
+        "path": "世界书/事件/20_凯雷德，给我来辆最贵的.txt",
+        "keywords": [
+          "20_凯雷德，给我来辆最贵的"
+        ],
+        "abstract": "原著事件详情：20_凯雷德，给我来辆最贵的",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 270
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "20_凯雷德，给我来辆最贵的"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_21_老爷们搁外面必须穿板正儿的！": {
+        "path": "世界书/事件/21_老爷们搁外面必须穿板正儿的！.txt",
+        "keywords": [
+          "21_老爷们搁外面必须穿板正儿的！"
+        ],
+        "abstract": "原著事件详情：21_老爷们搁外面必须穿板正儿的！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 271
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "21_老爷们搁外面必须穿板正儿的！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_22_你是叔的财神爷，值得": {
+        "path": "世界书/事件/22_你是叔的财神爷，值得.txt",
+        "keywords": [
+          "22_你是叔的财神爷，值得"
+        ],
+        "abstract": "原著事件详情：22_你是叔的财神爷，值得",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 272
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "22_你是叔的财神爷，值得"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_23_乌鸦坐飞机，精神小妹夜间大乱斗": {
+        "path": "世界书/事件/23_乌鸦坐飞机，精神小妹夜间大乱斗.txt",
+        "keywords": [
+          "23_乌鸦坐飞机，精神小妹夜间大乱斗"
+        ],
+        "abstract": "原著事件详情：23_乌鸦坐飞机，精神小妹夜间大乱斗",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 273
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "23_乌鸦坐飞机，精神小妹夜间大乱斗"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_24_高中校花，白金VIP专属经理": {
+        "path": "世界书/事件/24_高中校花，白金VIP专属经理.txt",
+        "keywords": [
+          "24_高中校花，白金VIP专属经理"
+        ],
+        "abstract": "原著事件详情：24_高中校花，白金VIP专属经理",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 274
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "24_高中校花，白金VIP专属经理"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_25_同学聚会，校花入局": {
+        "path": "世界书/事件/25_同学聚会，校花入局.txt",
+        "keywords": [
+          "25_同学聚会，校花入局"
+        ],
+        "abstract": "原著事件详情：25_同学聚会，校花入局",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 275
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "25_同学聚会，校花入局"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_26_舔狗炫富，精神小妹磨刀霍霍": {
+        "path": "世界书/事件/26_舔狗炫富，精神小妹磨刀霍霍.txt",
+        "keywords": [
+          "26_舔狗炫富，精神小妹磨刀霍霍"
+        ],
+        "abstract": "原著事件详情：26_舔狗炫富，精神小妹磨刀霍霍",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 276
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "26_舔狗炫富，精神小妹磨刀霍霍"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_27_凯雷德碾压，舔狗梦碎": {
+        "path": "世界书/事件/27_凯雷德碾压，舔狗梦碎.txt",
+        "keywords": [
+          "27_凯雷德碾压，舔狗梦碎"
+        ],
+        "abstract": "原著事件详情：27_凯雷德碾压，舔狗梦碎",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 277
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "27_凯雷德碾压，舔狗梦碎"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_28_建材市场遇熟人，精神小妹暴露了": {
+        "path": "世界书/事件/28_建材市场遇熟人，精神小妹暴露了.txt",
+        "keywords": [
+          "28_建材市场遇熟人，精神小妹暴露了"
+        ],
+        "abstract": "原著事件详情：28_建材市场遇熟人，精神小妹暴露了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 278
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "28_建材市场遇熟人，精神小妹暴露了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_29_妹妹来了": {
+        "path": "世界书/事件/29_妹妹来了.txt",
+        "keywords": [
+          "29_妹妹来了"
+        ],
+        "abstract": "原著事件详情：29_妹妹来了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 279
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "29_妹妹来了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_30_五虎上将齐上炕": {
+        "path": "世界书/事件/30_五虎上将齐上炕.txt",
+        "keywords": [
+          "30_五虎上将齐上炕"
+        ],
+        "abstract": "原著事件详情：30_五虎上将齐上炕",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 280
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "30_五虎上将齐上炕"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_31_晨间兵荒马乱，闺蜜天团上工了": {
+        "path": "世界书/事件/31_晨间兵荒马乱，闺蜜天团上工了.txt",
+        "keywords": [
+          "31_晨间兵荒马乱，闺蜜天团上工了"
+        ],
+        "abstract": "原著事件详情：31_晨间兵荒马乱，闺蜜天团上工了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 281
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "31_晨间兵荒马乱，闺蜜天团上工了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_32_火车站接妹，精神小妹严阵以待": {
+        "path": "世界书/事件/32_火车站接妹，精神小妹严阵以待.txt",
+        "keywords": [
+          "32_火车站接妹，精神小妹严阵以待"
+        ],
+        "abstract": "原著事件详情：32_火车站接妹，精神小妹严阵以待",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 282
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "32_火车站接妹，精神小妹严阵以待"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_33_精神小妹见亲妹": {
+        "path": "世界书/事件/33_精神小妹见亲妹.txt",
+        "keywords": [
+          "33_精神小妹见亲妹"
+        ],
+        "abstract": "原著事件详情：33_精神小妹见亲妹",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 283
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "33_精神小妹见亲妹"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_34_磨合之夜，精神小妹与亲妹初交锋": {
+        "path": "世界书/事件/34_磨合之夜，精神小妹与亲妹初交锋.txt",
+        "keywords": [
+          "34_磨合之夜，精神小妹与亲妹初交锋"
+        ],
+        "abstract": "原著事件详情：34_磨合之夜，精神小妹与亲妹初交锋",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 284
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "34_磨合之夜，精神小妹与亲妹初交锋"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_35_暗夜集结，六人通铺": {
+        "path": "世界书/事件/35_暗夜集结，六人通铺.txt",
+        "keywords": [
+          "35_暗夜集结，六人通铺"
+        ],
+        "abstract": "原著事件详情：35_暗夜集结，六人通铺",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 285
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "35_暗夜集结，六人通铺"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_36_再见卢冰雁": {
+        "path": "世界书/事件/36_再见卢冰雁.txt",
+        "keywords": [
+          "36_再见卢冰雁"
+        ],
+        "abstract": "原著事件详情：36_再见卢冰雁",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 286
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "36_再见卢冰雁"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_37_一个打一群，阿威十八式显威": {
+        "path": "世界书/事件/37_一个打一群，阿威十八式显威.txt",
+        "keywords": [
+          "37_一个打一群，阿威十八式显威"
+        ],
+        "abstract": "原著事件详情：37_一个打一群，阿威十八式显威",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 287
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "37_一个打一群，阿威十八式显威"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_38_狂刷百万，我哥被富婆快乐球了？": {
+        "path": "世界书/事件/38_狂刷百万，我哥被富婆快乐球了？.txt",
+        "keywords": [
+          "38_狂刷百万，我哥被富婆快乐球了？"
+        ],
+        "abstract": "原著事件详情：38_狂刷百万，我哥被富婆快乐球了？",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 288
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "38_狂刷百万，我哥被富婆快乐球了？"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_39_连麦PK，青龙威武": {
+        "path": "世界书/事件/39_连麦PK，青龙威武.txt",
+        "keywords": [
+          "39_连麦PK，青龙威武"
+        ],
+        "abstract": "原著事件详情：39_连麦PK，青龙威武",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 289
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "39_连麦PK，青龙威武"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_40_我来收租的，砸了改洗浴中心": {
+        "path": "世界书/事件/40_我来收租的，砸了改洗浴中心.txt",
+        "keywords": [
+          "40_我来收租的，砸了改洗浴中心"
+        ],
+        "abstract": "原著事件详情：40_我来收租的，砸了改洗浴中心",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 290
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "40_我来收租的，砸了改洗浴中心"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_41_老板，他们欠租了吗？": {
+        "path": "世界书/事件/41_老板，他们欠租了吗？.txt",
+        "keywords": [
+          "41_老板，他们欠租了吗？"
+        ],
+        "abstract": "原著事件详情：41_老板，他们欠租了吗？",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 291
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "41_老板，他们欠租了吗？"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_42_旋转餐厅的凡尔赛，精神小妹的吃货觉醒": {
+        "path": "世界书/事件/42_旋转餐厅的凡尔赛，精神小妹的吃货觉醒.txt",
+        "keywords": [
+          "42_旋转餐厅的凡尔赛，精神小妹的吃货觉醒"
+        ],
+        "abstract": "原著事件详情：42_旋转餐厅的凡尔赛，精神小妹的吃货觉醒",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 292
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "42_旋转餐厅的凡尔赛，精神小妹的吃货觉醒"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_43_豪车尾随，路边草丛里的野生小妹": {
+        "path": "世界书/事件/43_豪车尾随，路边草丛里的野生小妹.txt",
+        "keywords": [
+          "43_豪车尾随，路边草丛里的野生小妹"
+        ],
+        "abstract": "原著事件详情：43_豪车尾随，路边草丛里的野生小妹",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 293
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "43_豪车尾随，路边草丛里的野生小妹"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_44_原装小妹求收编，精神圈子里的暗流": {
+        "path": "世界书/事件/44_原装小妹求收编，精神圈子里的暗流.txt",
+        "keywords": [
+          "44_原装小妹求收编，精神圈子里的暗流"
+        ],
+        "abstract": "原著事件详情：44_原装小妹求收编，精神圈子里的暗流",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 294
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "44_原装小妹求收编，精神圈子里的暗流"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_45_叔，我有七个了": {
+        "path": "世界书/事件/45_叔，我有七个了.txt",
+        "keywords": [
+          "45_叔，我有七个了"
+        ],
+        "abstract": "原著事件详情：45_叔，我有七个了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 295
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "45_叔，我有七个了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_46_举报十七次，叔的刀还没凉呢": {
+        "path": "世界书/事件/46_举报十七次，叔的刀还没凉呢.txt",
+        "keywords": [
+          "46_举报十七次，叔的刀还没凉呢"
+        ],
+        "abstract": "原著事件详情：46_举报十七次，叔的刀还没凉呢",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 296
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "46_举报十七次，叔的刀还没凉呢"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_47_请客的人跑了，床冷了才知道慌": {
+        "path": "世界书/事件/47_请客的人跑了，床冷了才知道慌.txt",
+        "keywords": [
+          "47_请客的人跑了，床冷了才知道慌"
+        ],
+        "abstract": "原著事件详情：47_请客的人跑了，床冷了才知道慌",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 297
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "47_请客的人跑了，床冷了才知道慌"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_48_全城搜捕，叔的红包炸翻精神圈": {
+        "path": "世界书/事件/48_全城搜捕，叔的红包炸翻精神圈.txt",
+        "keywords": [
+          "48_全城搜捕，叔的红包炸翻精神圈"
+        ],
+        "abstract": "原著事件详情：48_全城搜捕，叔的红包炸翻精神圈",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 298
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "48_全城搜捕，叔的红包炸翻精神圈"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_49_她的命，不该是谁的聘礼": {
+        "path": "世界书/事件/49_她的命，不该是谁的聘礼.txt",
+        "keywords": [
+          "49_她的命，不该是谁的聘礼"
+        ],
+        "abstract": "原著事件详情：49_她的命，不该是谁的聘礼",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 299
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "49_她的命，不该是谁的聘礼"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_50_这辈子的租金，交给你了": {
+        "path": "世界书/事件/50_这辈子的租金，交给你了.txt",
+        "keywords": [
+          "50_这辈子的租金，交给你了"
+        ],
+        "abstract": "原著事件详情：50_这辈子的租金，交给你了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 300
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "50_这辈子的租金，交给你了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_51_黄金瞳开眼，叔看东西开始冒价了": {
+        "path": "世界书/事件/51_黄金瞳开眼，叔看东西开始冒价了.txt",
+        "keywords": [
+          "51_黄金瞳开眼，叔看东西开始冒价了"
+        ],
+        "abstract": "原著事件详情：51_黄金瞳开眼，叔看东西开始冒价了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 301
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "51_黄金瞳开眼，叔看东西开始冒价了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_52_黄金瞳出显威": {
+        "path": "世界书/事件/52_黄金瞳出显威.txt",
+        "keywords": [
+          "52_黄金瞳出显威"
+        ],
+        "abstract": "原著事件详情：52_黄金瞳出显威",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 302
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "52_黄金瞳出显威"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_53_叔，你今晚……还收租吗": {
+        "path": "世界书/事件/53_叔，你今晚……还收租吗.txt",
+        "keywords": [
+          "53_叔，你今晚……还收租吗"
+        ],
+        "abstract": "原著事件详情：53_叔，你今晚……还收租吗",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 303
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "53_叔，你今晚……还收租吗"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_54_整，必须整，谁不整谁孙子！": {
+        "path": "世界书/事件/54_整，必须整，谁不整谁孙子！.txt",
+        "keywords": [
+          "54_整，必须整，谁不整谁孙子！"
+        ],
+        "abstract": "原著事件详情：54_整，必须整，谁不整谁孙子！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 304
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "54_整，必须整，谁不整谁孙子！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_55_太后懿旨，活着干，死了算": {
+        "path": "世界书/事件/55_太后懿旨，活着干，死了算.txt",
+        "keywords": [
+          "55_太后懿旨，活着干，死了算"
+        ],
+        "abstract": "原著事件详情：55_太后懿旨，活着干，死了算",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 305
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "55_太后懿旨，活着干，死了算"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_56_见家长大采购，工资卡都想刷冒烟": {
+        "path": "世界书/事件/56_见家长大采购，工资卡都想刷冒烟.txt",
+        "keywords": [
+          "56_见家长大采购，工资卡都想刷冒烟"
+        ],
+        "abstract": "原著事件详情：56_见家长大采购，工资卡都想刷冒烟",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 306
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "56_见家长大采购，工资卡都想刷冒烟"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_57_豹子号进村": {
+        "path": "世界书/事件/57_豹子号进村.txt",
+        "keywords": [
+          "57_豹子号进村"
+        ],
+        "abstract": "原著事件详情：57_豹子号进村",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 307
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "57_豹子号进村"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_58_这闺女，看着乖带劲的，这伦理玩笑可不兴开啊": {
+        "path": "世界书/事件/58_这闺女，看着乖带劲的，这伦理玩笑可不兴开啊.txt",
+        "keywords": [
+          "58_这闺女，看着乖带劲的，这伦理玩笑可不兴开啊"
+        ],
+        "abstract": "原著事件详情：58_这闺女，看着乖带劲的，这伦理玩笑可不兴开啊",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 308
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "58_这闺女，看着乖带劲的，这伦理玩笑可不兴开啊"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_59_要饭都养他，你儿子白给都没人要": {
+        "path": "世界书/事件/59_要饭都养他，你儿子白给都没人要.txt",
+        "keywords": [
+          "59_要饭都养他，你儿子白给都没人要"
+        ],
+        "abstract": "原著事件详情：59_要饭都养他，你儿子白给都没人要",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 309
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "59_要饭都养他，你儿子白给都没人要"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_60_有钱身边皆好人，老爹腰杆终挺直": {
+        "path": "世界书/事件/60_有钱身边皆好人，老爹腰杆终挺直.txt",
+        "keywords": [
+          "60_有钱身边皆好人，老爹腰杆终挺直"
+        ],
+        "abstract": "原著事件详情：60_有钱身边皆好人，老爹腰杆终挺直",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 310
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "60_有钱身边皆好人，老爹腰杆终挺直"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_61_叔，年轻前儿也不是一般炮儿啊": {
+        "path": "世界书/事件/61_叔，年轻前儿也不是一般炮儿啊.txt",
+        "keywords": [
+          "61_叔，年轻前儿也不是一般炮儿啊"
+        ],
+        "abstract": "原著事件详情：61_叔，年轻前儿也不是一般炮儿啊",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 311
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "61_叔，年轻前儿也不是一般炮儿啊"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_62_舅妈开团，精神小妹反手上强度": {
+        "path": "世界书/事件/62_舅妈开团，精神小妹反手上强度.txt",
+        "keywords": [
+          "62_舅妈开团，精神小妹反手上强度"
+        ],
+        "abstract": "原著事件详情：62_舅妈开团，精神小妹反手上强度",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 312
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "62_舅妈开团，精神小妹反手上强度"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_63_破盒值百万，舅妈当场裂开了": {
+        "path": "世界书/事件/63_破盒值百万，舅妈当场裂开了.txt",
+        "keywords": [
+          "63_破盒值百万，舅妈当场裂开了"
+        ],
+        "abstract": "原著事件详情：63_破盒值百万，舅妈当场裂开了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 313
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "63_破盒值百万，舅妈当场裂开了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_64_还是那句话，我是个传统的女人": {
+        "path": "世界书/事件/64_还是那句话，我是个传统的女人.txt",
+        "keywords": [
+          "64_还是那句话，我是个传统的女人"
+        ],
+        "abstract": "原著事件详情：64_还是那句话，我是个传统的女人",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 314
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "64_还是那句话，我是个传统的女人"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_65_星河入眼，这辈子就交给你了": {
+        "path": "世界书/事件/65_星河入眼，这辈子就交给你了.txt",
+        "keywords": [
+          "65_星河入眼，这辈子就交给你了"
+        ],
+        "abstract": "原著事件详情：65_星河入眼，这辈子就交给你了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 315
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "65_星河入眼，这辈子就交给你了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_66_夜袭林野！": {
+        "path": "世界书/事件/66_夜袭林野！.txt",
+        "keywords": [
+          "66_夜袭林野！"
+        ],
+        "abstract": "原著事件详情：66_夜袭林野！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 316
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "66_夜袭林野！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_67_收苞米？精神小妹要上强度了": {
+        "path": "世界书/事件/67_收苞米？精神小妹要上强度了.txt",
+        "keywords": [
+          "67_收苞米？精神小妹要上强度了"
+        ],
+        "abstract": "原著事件详情：67_收苞米？精神小妹要上强度了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 317
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "67_收苞米？精神小妹要上强度了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_68_苞米地里MVP，精神小妹开大播": {
+        "path": "世界书/事件/68_苞米地里MVP，精神小妹开大播.txt",
+        "keywords": [
+          "68_苞米地里MVP，精神小妹开大播"
+        ],
+        "abstract": "原著事件详情：68_苞米地里MVP，精神小妹开大播",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 318
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "68_苞米地里MVP，精神小妹开大播"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_69_盖房租金到账，叔真成刀枪炮了": {
+        "path": "世界书/事件/69_盖房租金到账，叔真成刀枪炮了.txt",
+        "keywords": [
+          "69_盖房租金到账，叔真成刀枪炮了"
+        ],
+        "abstract": "原著事件详情：69_盖房租金到账，叔真成刀枪炮了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 319
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "69_盖房租金到账，叔真成刀枪炮了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_70_宅基地不够大？村支书大笔一挥": {
+        "path": "世界书/事件/70_宅基地不够大？村支书大笔一挥.txt",
+        "keywords": [
+          "70_宅基地不够大？村支书大笔一挥"
+        ],
+        "abstract": "原著事件详情：70_宅基地不够大？村支书大笔一挥",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 320
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "70_宅基地不够大？村支书大笔一挥"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_71_过江龙遇下山虎？是刀枪炮对葱姜蒜！": {
+        "path": "世界书/事件/71_过江龙遇下山虎？是刀枪炮对葱姜蒜！.txt",
+        "keywords": [
+          "71_过江龙遇下山虎？是刀枪炮对葱姜蒜！"
+        ],
+        "abstract": "原著事件详情：71_过江龙遇下山虎？是刀枪炮对葱姜蒜！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 321
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "71_过江龙遇下山虎？是刀枪炮对葱姜蒜！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_72_寿宴总包？这活儿星耀接了": {
+        "path": "世界书/事件/72_寿宴总包？这活儿星耀接了.txt",
+        "keywords": [
+          "72_寿宴总包？这活儿星耀接了"
+        ],
+        "abstract": "原著事件详情：72_寿宴总包？这活儿星耀接了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 322
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "72_寿宴总包？这活儿星耀接了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_73_村口修路风波": {
+        "path": "世界书/事件/73_村口修路风波.txt",
+        "keywords": [
+          "73_村口修路风波"
+        ],
+        "abstract": "原著事件详情：73_村口修路风波",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 323
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "73_村口修路风波"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_74_嘿，把你当人参种了还得领补贴呢": {
+        "path": "世界书/事件/74_嘿，把你当人参种了还得领补贴呢.txt",
+        "keywords": [
+          "74_嘿，把你当人参种了还得领补贴呢"
+        ],
+        "abstract": "原著事件详情：74_嘿，把你当人参种了还得领补贴呢",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 324
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "74_嘿，把你当人参种了还得领补贴呢"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_75_儿砸，这些年，你没少让社会吃苦吧": {
+        "path": "世界书/事件/75_儿砸，这些年，你没少让社会吃苦吧.txt",
+        "keywords": [
+          "75_儿砸，这些年，你没少让社会吃苦吧"
+        ],
+        "abstract": "原著事件详情：75_儿砸，这些年，你没少让社会吃苦吧",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 325
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "75_儿砸，这些年，你没少让社会吃苦吧"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_76_捡个洋妹子，还是个毛子精神小妹": {
+        "path": "世界书/事件/76_捡个洋妹子，还是个毛子精神小妹.txt",
+        "keywords": [
+          "76_捡个洋妹子，还是个毛子精神小妹"
+        ],
+        "abstract": "原著事件详情：76_捡个洋妹子，还是个毛子精神小妹",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 326
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "76_捡个洋妹子，还是个毛子精神小妹"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_77_外国小妹拜码头，翻译器当场罢工": {
+        "path": "世界书/事件/77_外国小妹拜码头，翻译器当场罢工.txt",
+        "keywords": [
+          "77_外国小妹拜码头，翻译器当场罢工"
+        ],
+        "abstract": "原著事件详情：77_外国小妹拜码头，翻译器当场罢工",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 327
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "77_外国小妹拜码头，翻译器当场罢工"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_78_教父收租，月牙湾直接开盘": {
+        "path": "世界书/事件/78_教父收租，月牙湾直接开盘.txt",
+        "keywords": [
+          "78_教父收租，月牙湾直接开盘"
+        ],
+        "abstract": "原著事件详情：78_教父收租，月牙湾直接开盘",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 328
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "78_教父收租，月牙湾直接开盘"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_79_消费不看价，系统奖励度假山庄": {
+        "path": "世界书/事件/79_消费不看价，系统奖励度假山庄.txt",
+        "keywords": [
+          "79_消费不看价，系统奖励度假山庄"
+        ],
+        "abstract": "原著事件详情：79_消费不看价，系统奖励度假山庄",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 329
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "79_消费不看价，系统奖励度假山庄"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_80_山庄开门，老两口当场没词了": {
+        "path": "世界书/事件/80_山庄开门，老两口当场没词了.txt",
+        "keywords": [
+          "80_山庄开门，老两口当场没词了"
+        ],
+        "abstract": "原著事件详情：80_山庄开门，老两口当场没词了",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 330
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "80_山庄开门，老两口当场没词了"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_81_月牙湾寿宴？等翻车吧": {
+        "path": "世界书/事件/81_月牙湾寿宴？等翻车吧.txt",
+        "keywords": [
+          "81_月牙湾寿宴？等翻车吧"
+        ],
+        "abstract": "原著事件详情：81_月牙湾寿宴？等翻车吧",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 331
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "81_月牙湾寿宴？等翻车吧"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_82_靠边停！三十万宝马吃瘪": {
+        "path": "世界书/事件/82_靠边停！三十万宝马吃瘪.txt",
+        "keywords": [
+          "82_靠边停！三十万宝马吃瘪"
+        ],
+        "abstract": "原著事件详情：82_靠边停！三十万宝马吃瘪",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 332
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "82_靠边停！三十万宝马吃瘪"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_83_现场打假？产权证糊脸！": {
+        "path": "世界书/事件/83_现场打假？产权证糊脸！.txt",
+        "keywords": [
+          "83_现场打假？产权证糊脸！"
+        ],
+        "abstract": "原著事件详情：83_现场打假？产权证糊脸！",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 333
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "83_现场打假？产权证糊脸！"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_84_宝马刚落座，账单先上桌": {
+        "path": "世界书/事件/84_宝马刚落座，账单先上桌.txt",
+        "keywords": [
+          "84_宝马刚落座，账单先上桌"
+        ],
+        "abstract": "原著事件详情：84_宝马刚落座，账单先上桌",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 334
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "84_宝马刚落座，账单先上桌"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_85_养老牌一出，叔把桌掀稳": {
+        "path": "世界书/事件/85_养老牌一出，叔把桌掀稳.txt",
+        "keywords": [
+          "85_养老牌一出，叔把桌掀稳"
+        ],
+        "abstract": "原著事件详情：85_养老牌一出，叔把桌掀稳",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 335
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "85_养老牌一出，叔把桌掀稳"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_86_算盘落空，跳梁小丑现原形": {
+        "path": "世界书/事件/86_算盘落空，跳梁小丑现原形.txt",
+        "keywords": [
+          "86_算盘落空，跳梁小丑现原形"
+        ],
+        "abstract": "原著事件详情：86_算盘落空，跳梁小丑现原形",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 336
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "86_算盘落空，跳梁小丑现原形"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_87_流量狙击，精神小妹的情报网": {
+        "path": "世界书/事件/87_流量狙击，精神小妹的情报网.txt",
+        "keywords": [
+          "87_流量狙击，精神小妹的情报网"
+        ],
+        "abstract": "原著事件详情：87_流量狙击，精神小妹的情报网",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 337
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "87_流量狙击，精神小妹的情报网"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_88_商业版图，星耀传媒新矩阵": {
+        "path": "世界书/事件/88_商业版图，星耀传媒新矩阵.txt",
+        "keywords": [
+          "88_商业版图，星耀传媒新矩阵"
+        ],
+        "abstract": "原著事件详情：88_商业版图，星耀传媒新矩阵",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 338
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "88_商业版图，星耀传媒新矩阵"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_89_锋芒毕露，同行暗算反被坑": {
+        "path": "世界书/事件/89_锋芒毕露，同行暗算反被坑.txt",
+        "keywords": [
+          "89_锋芒毕露，同行暗算反被坑"
+        ],
+        "abstract": "原著事件详情：89_锋芒毕露，同行暗算反被坑",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 339
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "89_锋芒毕露，同行暗算反被坑"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_90_新家落成，乔迁之喜惊全村": {
+        "path": "世界书/事件/90_新家落成，乔迁之喜惊全村.txt",
+        "keywords": [
+          "90_新家落成，乔迁之喜惊全村"
+        ],
+        "abstract": "原著事件详情：90_新家落成，乔迁之喜惊全村",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 340
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "90_新家落成，乔迁之喜惊全村"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_91_夜半惊魂，张涛作死触逆鳞": {
+        "path": "世界书/事件/91_夜半惊魂，张涛作死触逆鳞.txt",
+        "keywords": [
+          "91_夜半惊魂，张涛作死触逆鳞"
+        ],
+        "abstract": "原著事件详情：91_夜半惊魂，张涛作死触逆鳞",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 341
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "91_夜半惊魂，张涛作死触逆鳞"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_92_村头大树下的“印第安老斑鸠”": {
+        "path": "世界书/事件/92_村头大树下的“印第安老斑鸠”.txt",
+        "keywords": [
+          "92_村头大树下的“印第安老斑鸠”"
+        ],
+        "abstract": "原著事件详情：92_村头大树下的“印第安老斑鸠”",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 342
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "92_村头大树下的“印第安老斑鸠”"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_93_后山菜地的“地下狂欢”": {
+        "path": "世界书/事件/93_后山菜地的“地下狂欢”.txt",
+        "keywords": [
+          "93_后山菜地的“地下狂欢”"
+        ],
+        "abstract": "原著事件详情：93_后山菜地的“地下狂欢”",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 343
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "93_后山菜地的“地下狂欢”"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_94_擦边风波，重拳出击": {
+        "path": "世界书/事件/94_擦边风波，重拳出击.txt",
+        "keywords": [
+          "94_擦边风波，重拳出击"
+        ],
+        "abstract": "原著事件详情：94_擦边风波，重拳出击",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 344
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "94_擦边风波，重拳出击"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_95_神秘酒会，资本的鸿门宴": {
+        "path": "世界书/事件/95_神秘酒会，资本的鸿门宴.txt",
+        "keywords": [
+          "95_神秘酒会，资本的鸿门宴"
+        ],
+        "abstract": "原著事件详情：95_神秘酒会，资本的鸿门宴",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 345
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "95_神秘酒会，资本的鸿门宴"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_96_小惠的生母，豪门的弃子": {
+        "path": "世界书/事件/96_小惠的生母，豪门的弃子.txt",
+        "keywords": [
+          "96_小惠的生母，豪门的弃子"
+        ],
+        "abstract": "原著事件详情：96_小惠的生母，豪门的弃子",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 346
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "96_小惠的生母，豪门的弃子"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_97_四平公主的嫉妒与代价": {
+        "path": "世界书/事件/97_四平公主的嫉妒与代价.txt",
+        "keywords": [
+          "97_四平公主的嫉妒与代价"
+        ],
+        "abstract": "原著事件详情：97_四平公主的嫉妒与代价",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 347
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "97_四平公主的嫉妒与代价"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_98_进军省城，精神小妹的降维打击": {
+        "path": "世界书/事件/98_进军省城，精神小妹的降维打击.txt",
+        "keywords": [
+          "98_进军省城，精神小妹的降维打击"
+        ],
+        "abstract": "原著事件详情：98_进军省城，精神小妹的降维打击",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 348
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "98_进军省城，精神小妹的降维打击"
+          ]
+        },
+        "scope": "specific"
+      },
+      "[mvu_plot]事件详情_99_赵阔的反扑，困兽之斗": {
+        "path": "世界书/事件/99_赵阔的反扑，困兽之斗.txt",
+        "keywords": [
+          "99_赵阔的反扑，困兽之斗"
+        ],
+        "abstract": "原著事件详情：99_赵阔的反扑，困兽之斗",
+        "enabled": true,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 1,
+          "order": 349
+        },
+        "strategy": {
+          "type": "selective",
+          "keys": [
+            "99_赵阔的反扑，困兽之斗"
+          ]
+        },
+        "scope": "specific"
+      }
+    },
+    "MVU": {
+      "[mvu_update]变量输出格式": {
+        "path": "世界书/变量/变量输出格式.txt",
+        "part": "output_format",
+        "keywords": [],
+        "abstract": "MVU变量输出格式",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 0,
+          "order": 150
+        }
+      },
+      "变量列表": {
+        "path": "世界书/变量/变量列表.txt",
+        "part": "variable_list",
+        "keywords": [],
+        "abstract": "MVU变量列表",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 0,
+          "order": 160
+        }
+      },
+      "[mvu_update]变量更新规则": {
+        "path": "世界书/变量/变量更新规则.yaml",
+        "part": "update_rules",
+        "keywords": [],
+        "abstract": "MVU变量更新规则",
+        "enabled": true,
+        "strategy": {
+          "type": "constant"
+        },
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 0,
+          "order": 170
+        }
+      },
+      "[InitVar]请勿打开": {
+        "path": "世界书/变量/initvar.yaml",
+        "part": "initvar",
+        "keywords": [],
+        "abstract": "MVU初始变量",
+        "enabled": false,
+        "position": {
+          "type": "at_depth",
+          "role": "system",
+          "depth": 0,
+          "order": 180
+        }
+      }
+    }
+  },
+  "typeLists": {
+    "before_char": [
+      "世界观",
+      "扮演准则",
+      "时间线",
+      "地理"
+    ],
+    "after_char": [
+      "角色",
+      "NPC"
+    ],
+    "depth": [
+      "阶段指导",
+      "事件",
+      "MVU"
+    ]
+  },
+  "strategyThresholds": {
+    "角色": {
+      "basic": {
+        "threshold": 5,
+        "required": true
+      },
+      "other": {
+        "threshold": 2,
+        "required": false
+      },
+      "personality": {
+        "threshold": 2,
+        "required": true
+      },
+      "tri_faceted": {
+        "threshold": 2,
+        "required": false
+      }
+    },
+    "事件": 0,
+    "地理": {
+      "faction": {
+        "threshold": 4,
+        "required": false
+      },
+      "region": {
+        "threshold": 4,
+        "required": false
+      },
+      "scene": {
+        "threshold": 4,
+        "required": false
+      }
+    },
+    "MVU": {
+      "initvar": {
+        "threshold": null,
+        "required": false
+      },
+      "output_format": {
+        "threshold": "Infinity",
+        "required": false
+      },
+      "update_rules": {
+        "threshold": "Infinity",
+        "required": false
+      },
+      "variable_list": {
+        "threshold": "Infinity",
+        "required": false
+      }
+    },
+    "NPC": 0,
+    "扮演准则": "Infinity",
+    "时间线": {
+      "history": {
+        "threshold": "Infinity",
+        "required": false
+      },
+      "plot": {
+        "threshold": "Infinity",
+        "required": false
+      }
+    },
+    "世界观": "Infinity",
+    "阶段指导": "Infinity"
+  },
+  "partOrder": {
+    "角色": [
+      "basic",
+      "personality",
+      "tri_faceted",
+      "other"
+    ],
+    "地理": [
+      "region",
+      "scene",
+      "faction"
+    ],
+    "MVU": [
+      "variable_list",
+      "update_rules",
+      "output_format",
+      "initvar"
+    ],
+    "时间线": [
+      "history",
+      "plot"
+    ]
+  },
+  "depth_defaults": {
+    "role": "system",
+    "depth": 0
+  },
+  "description": "",
+  "first_messages": [
+    "开场白/0.txt"
+  ],
+  "tags": [
+    "神豪",
+    "收租",
+    "系统流",
+    "都市",
+    "群像",
+    "后宫",
+    "擦边喜剧",
+    "MVU"
+  ],
+  "creator": "",
+  "creator_notes": "",
+  "version": "3.2.0",
+  "create_date": "2026-10-03T15:07:26.433Z",
+  "extensions": {
+    "tavern_helper": {
+      "scripts": {
+        "MVU": {
+          "type": "script",
+          "script_file": "脚本/MVU.txt",
+          "enabled": true,
+          "id": "d0311ca6-5e9a-498e-a777-f74dc4dc6b12",
+          "info": "",
+          "button": {
+            "enabled": true,
+            "buttons": [
+              {
+                "name": "重新处理变量",
+                "visible": true
+              },
+              {
+                "name": "重新读取初始变量",
+                "visible": true
+              },
+              {
+                "name": "快照楼层",
+                "visible": false
+              },
+              {
+                "name": "重演楼层",
+                "visible": false
+              },
+              {
+                "name": "重试额外模型解析",
+                "visible": false
+              },
+              {
+                "name": "清除旧楼层变量",
+                "visible": false
+              }
+            ]
+          },
+          "data": {}
+        },
+        "事件调度": {
+          "type": "script",
+          "script_file": "脚本/事件调度.js",
+          "enabled": true,
+          "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+          "info": "按世界.日期比对节点表，写入当前事件与下一个事件",
+          "button": {
+            "enabled": false,
+            "buttons": []
+          },
+          "data": {}
+        },
+        "变量信标": {
+          "type": "script",
+          "script_file": "脚本/变量信标.js",
+          "enabled": true,
+          "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+          "info": "生成前注入当前事件名，点亮对应事件详情",
+          "button": {
+            "enabled": false,
+            "buttons": []
+          },
+          "data": {}
+        }
+      },
+      "variables": {}
+    },
+    "talkativeness": "0.5",
+    "fav": false,
+    "depth_prompt": {
+      "prompt": "",
+      "depth": 4,
+      "role": "system"
+    }
+  },
+  "regex_scripts": {
+    "对AI隐藏状态栏": {
+      "id": "b5f2606f-69cc-4a6a-8ebb-bd8a3b7f671f",
+      "findRegex": "<StatusPlaceHolderImpl/>",
+      "replaceString": "",
+      "trimStrings": [],
+      "placement": [
+        2
+      ],
+      "disabled": false,
+      "markdownOnly": false,
+      "promptOnly": true,
+      "runOnEdit": true,
+      "substituteRegex": 0
+    },
+    "状态栏界面": {
+      "id": "ce6da13c-4e35-4057-8964-3192b7903acc",
+      "findRegex": "<StatusPlaceHolderImpl/>",
+      "replace_file": "正则/状态栏界面.html",
+      "trimStrings": [],
+      "placement": [
+        2
+      ],
+      "disabled": false,
+      "markdownOnly": true,
+      "promptOnly": false,
+      "runOnEdit": true,
+      "substituteRegex": 0
+    },
+    "行动选项界面(可关闭)": {
+      "id": "5f7a9892-a611-4e4f-90a7-648062130b91",
+      "findRegex": "```\n<body>",
+      "replaceString": "<div style=\"display:none\" data-opts-on=\"1\"></div>\n```\n<body>",
+      "trimStrings": [],
+      "placement": [
+        2
+      ],
+      "disabled": false,
+      "markdownOnly": true,
+      "promptOnly": false,
+      "runOnEdit": true,
+      "substituteRegex": 0
+    },
+    "对AI隐藏变量更新": {
+      "id": "aa12731a-97c4-4450-ac2f-0bfe1d6a4f64",
+      "findRegex": "/<(update(?:variable)?)>(?:(?!.*<\\/\\1>)(?:(?!<\\1>).)*$|(?:(?!<\\1>).)*<\\/\\1?>)/gsi",
+      "replaceString": "",
+      "trimStrings": [],
+      "placement": [
+        1,
+        2
+      ],
+      "disabled": false,
+      "markdownOnly": false,
+      "promptOnly": true,
+      "runOnEdit": false,
+      "substituteRegex": 0
+    },
+    "变量更新中美化": {
+      "id": "b9d5f25b-a9d0-41bf-8a69-602d64bbde22",
+      "findRegex": "/<(update(?:variable)?)>(?!.*<\\/\\1>)\\s*((?:(?!<\\1>).)*)\\s*$/gsi",
+      "replace_file": "正则/变量更新中美化.html",
+      "trimStrings": [],
+      "placement": [
+        1,
+        2
+      ],
+      "disabled": false,
+      "markdownOnly": true,
+      "promptOnly": false,
+      "runOnEdit": false,
+      "substituteRegex": 0
+    },
+    "变量更新美化": {
+      "id": "92d49340-fe5e-4929-871f-43d110e5ec76",
+      "findRegex": "/<(update(?:variable)?)>\\s*((?:(?!<\\1>).)*)\\s*<\\/\\1>/gsi",
+      "replace_file": "正则/变量更新美化.html",
+      "trimStrings": [],
+      "placement": [
+        1,
+        2
+      ],
+      "disabled": false,
+      "markdownOnly": true,
+      "promptOnly": false,
+      "runOnEdit": false,
+      "substituteRegex": 0
+    }
+  },
+  "zod": {
+    "scriptName": "Zod",
+    "scriptId": "5b3b09af-35e3-4149-a0f7-2f08776ed6a1",
+    "schemaPath": "schema.ts",
+    "importUrl": "https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/mvu_zod.js"
+  },
+  "avatar": "avatar.png"
+}

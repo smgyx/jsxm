@@ -1,0 +1,21 @@
+```
+<body>
+<script>
+var SRC = 'https://testingcf.jsdelivr.net/gh/你的GitHub用户名/收租万倍返还@v1.0.0/dist/收租万倍返还/界面/客户端/index.html';
+function szLoad(){
+  $('body').html('<div style="text-align:center;color:#8b91a3;padding:20px;font-size:13px">正在加载收租终端…</div>');
+  $('body').load(SRC, function(response, status, xhr){
+    if(status === 'error'){
+      $('body').html(
+        '<div style="text-align:center;padding:24px;color:#e8eaf0;font-family:system-ui">' +
+        '<div style="font-size:15px;margin-bottom:8px">远程客户端加载失败</div>' +
+        '<div style="font-size:12px;color:#8b91a3;line-height:1.8">请检查：<br>1. dist 文件夹是否已原样上传到 GitHub 仓库<br>2. 是否已创建 v1.0.0 标签（Release）<br>3. 正则里「你的GitHub用户名」是否已替换为真实用户名<br>4. 网络能否访问 testingcf.jsdelivr.net</div>' +
+        '<button onclick="szLoad()" style="margin-top:12px;background:#232734;color:#53d8ff;border:1px solid #313648;border-radius:6px;padding:4px 16px;cursor:pointer">重试</button>' +
+        '</div>');
+    }
+  });
+}
+szLoad();
+</script>
+</body>
+```

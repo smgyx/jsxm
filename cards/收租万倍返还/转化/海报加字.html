@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>海报加字 · 收租精神小妹</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+        background: #f6f6f4;
+        color: #2c2c2a;
+        padding: 24px;
+      }
+      .wrap { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+      @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
+      .stage { background: #fff; border: 1px solid #e3e3df; border-radius: 12px; padding: 16px; display: flex; align-items: center; justify-content: center; min-height: 400px; }
+      #cv { max-width: 100%; max-height: 76vh; border-radius: 6px; }
+      .panel { background: #fff; border: 1px solid #e3e3df; border-radius: 12px; padding: 18px; }
+      h1 { font-size: 15px; font-weight: 500; margin-bottom: 14px; }
+      label { display: block; font-size: 12px; color: #6b6b66; margin: 12px 0 5px; }
+      input[type="text"], input[type="number"], select {
+        width: 100%; padding: 7px 9px; font-size: 13px;
+        border: 1px solid #d9d9d5; border-radius: 6px; background: #fbfbf9; color: #2c2c2a;
+        font-family: inherit;
+      }
+      input[type="color"] { width: 100%; height: 32px; padding: 2px; border: 1px solid #d9d9d5; border-radius: 6px; background: #fbfbf9; }
+      input[type="range"] { width: 100%; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      button {
+        width: 100%; padding: 10px; margin-top: 16px; font-size: 13px; font-family: inherit;
+        border: none; border-radius: 8px; cursor: pointer; background: #2c2c2a; color: #fff;
+      }
+      button:hover { background: #444441; }
+      button.sec { background: #ecece8; color: #2c2c2a; }
+      button.sec:hover { background: #dededa; }
+      .hint { font-size: 11px; color: #8a8a84; line-height: 1.7; margin-top: 14px; padding-top: 12px; border-top: 1px solid #ecece8; }
+      .val { float: right; color: #2c2c2a; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="stage">
+        <canvas id="cv" width="832" height="1216"></canvas>
+      </div>
+      <div class="panel">
+        <h1>海报加字</h1>
+
+        <label>底图</label>
+        <input type="file" id="file" accept="image/*" />
+
+        <label>主标题</label>
+        <input type="text" id="t1" value="收租精神小妹" />
+
+        <label>副标题</label>
+        <input type="text" id="t2" value="第二季" />
+
+        <label>主标题字号 <span class="val" id="v1">96</span></label>
+        <input type="range" id="s1" min="30" max="180" value="96" />
+
+        <label>副标题字号 <span class="val" id="v2">48</span></label>
+        <input type="range" id="s2" min="16" max="120" value="48" />
+
+        <div class="row">
+          <div>
+            <label>标题颜色</label>
+            <input type="color" id="c1" value="#ffffff" />
+          </div>
+          <div>
+            <label>描边颜色</label>
+            <input type="color" id="c2" value="#1a0f2e" />
+          </div>
+        </div>
+
+        <label>描边粗细 <span class="val" id="v3">10</span></label>
+        <input type="range" id="s3" min="0" max="30" value="10" />
+
+        <label>垂直位置 <span class="val" id="v4">22%</span></label>
+        <input type="range" id="s4" min="5" max="80" value="22" />
+
+        <label>字体</label>
+        <select id="font">
+          <option value='"PingFang SC", "Microsoft YaHei", sans-serif'>默认黑体</option>
+          <option value='"STZhongsong", "SimSun", serif'>宋体</option>
+          <option value='"STKaiti", "KaiTi", serif'>楷体</option>
+          <option value='"STHeiti", "SimHei", sans-serif'>粗黑</option>
+        </select>
+
+        <label>字距 <span class="val" id="v5">4</span></label>
+        <input type="range" id="s5" min="-10" max="40" value="4" />
+
+        <button onclick="exportPNG()">导出 PNG</button>
+        <button class="sec" onclick="resetAll()">重置</button>
+
+        <div class="hint">
+          用法：先用 NAI 生成底图（不要让它写字），保存后在这里上传，调好字的位置样式导出。<br /><br />
+          AI 画中文字几乎必糊，所以标题一律后期叠。
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const cv = document.getElementById('cv');
+      const ctx = cv.getContext('2d');
+      let img = null;
+
+      const el = id => document.getElementById(id);
+      const FONT = '"PingFang SC", "Microsoft YaHei", system-ui, sans-serif';
+
+      el('file').addEventListener('change', e => {
+        const f = e.target.files[0];
+        if (!f) return;
+        const url = URL.createObjectURL(f);
+        const im = new Image();
+        im.onload = () => {
+          img = im;
+          cv.width = im.width;
+          cv.height = im.height;
+          draw();
+          URL.revokeObjectURL(url);
+        };
+        im.src = url;
+      });
+
+      function drawText(text, y, size, fill, stroke, strokeW, spacing) {
+        if (!text) return;
+        const font = el('font').value;
+        ctx.font = `700 ${size}px ${font}`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // 手动字距
+        const chars = [...text];
+        const widths = chars.map(c => ctx.measureText(c).width);
+        const total = widths.reduce((a, b) => a + b, 0) + spacing * (chars.length - 1);
+        let x = cv.width / 2 - total / 2;
+
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.55)';
+        ctx.shadowBlur = size * 0.18;
+        ctx.shadowOffsetY = size * 0.06;
+
+        chars.forEach((c, i) => {
+          const cx = x + widths[i] / 2;
+          if (strokeW > 0) {
+            ctx.lineWidth = strokeW;
+            ctx.strokeStyle = stroke;
+            ctx.lineJoin = 'round';
+            ctx.strokeText(c, cx, y);
+          }
+          ctx.fillStyle = fill;
+          ctx.fillText(c, cx, y);
+          x += widths[i] + spacing;
+        });
+        ctx.restore();
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        if (img) {
+          ctx.drawImage(img, 0, 0, cv.width, cv.height);
+        } else {
+          ctx.fillStyle = '#22222a';
+          ctx.fillRect(0, 0, cv.width, cv.height);
+          ctx.fillStyle = '#6b6b66';
+          ctx.font = `400 20px ${FONT}`;
+          ctx.textAlign = 'center';
+          ctx.fillText('请先上传底图', cv.width / 2, cv.height / 2);
+          return;
+        }
+
+        const base = cv.width / 832;
+        const s1 = +el('s1').value * base;
+        const s2 = +el('s2').value * base;
+        const sw = +el('s3').value * base;
+        const pct = +el('s4').value / 100;
+        const sp = +el('s5').value * base;
+
+        const y1 = cv.height * pct;
+        const y2 = y1 + s1 * 0.95 + s2 * 0.25;
+
+        drawText(el('t1').value, y1, s1, el('c1').value, el('c2').value, sw, sp);
+        drawText(el('t2').value, y2, s2, el('c1').value, el('c2').value, sw * 0.7, sp * 0.6);
+      }
+
+      function bind(id, out, suffix) {
+        el(id).addEventListener('input', () => {
+          el(out).textContent = el(id).value + (suffix || '');
+          draw();
+        });
+      }
+      bind('s1', 'v1'); bind('s2', 'v2'); bind('s3', 'v3');
+      bind('s4', 'v4', '%'); bind('s5', 'v5');
+      ['t1', 't2', 'c1', 'c2', 'font'].forEach(id => el(id).addEventListener('input', draw));
+
+      function exportPNG() {
+        if (!img) { alert('请先上传底图'); return; }
+        cv.toBlob(b => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(b);
+          a.download = `${el('t1').value || 'poster'}.png`;
+          a.click();
+        }, 'image/png');
+      }
+
+      function resetAll() {
+        el('t1').value = '收租精神小妹';
+        el('t2').value = '第二季';
+        el('s1').value = 96; el('v1').textContent = 96;
+        el('s2').value = 48; el('v2').textContent = 48;
+        el('s3').value = 10; el('v3').textContent = 10;
+        el('s4').value = 22; el('v4').textContent = '22%';
+        el('s5').value = 4;  el('v5').textContent = 4;
+        draw();
+      }
+
+      draw();
+    </script>
+  </body>
+</html>

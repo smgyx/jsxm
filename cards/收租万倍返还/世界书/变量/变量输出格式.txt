@@ -1,0 +1,24 @@
+变量输出格式:
+  rule:
+    - 整条回复只能有一个 UpdateVariable 块，放在正文全部写完之后、状态栏占位符之前
+    - 补丁按 JSON Patch 写法，只能用 replace、add、remove、move。不要用 delta、insert
+    - replace 只能改已经存在的路径。新人物、新红颜、新产业用 add。删掉用 remove
+    - 下划线开头的字段只读，不要改
+  format: |-
+    <UpdateVariable>
+    <Analysis>
+    - 本轮经过的时间，以及是否允许大额结算
+    - 对照每条 check，只根据本轮正文判断哪些字段变了
+    - 数字写清：旧值 + 变化 = 新值
+    </Analysis>
+    <JSONPatch>
+    [
+      { "op": "replace", "path": "/世界/时段", "value": "傍晚" },
+      { "op": "add", "path": "/人物/周克梅", "value": { "身份": "相亲对象", "与主角关系": "母亲介绍", "当前状态": "正在开条件" } },
+      { "op": "remove", "path": "/人物/已离场的人" },
+      { "op": "replace", "path": "/选项", "value": ["离开包间"] }
+    ]
+    </JSONPatch>
+    </UpdateVariable>
+
+  /选项 必须整组替换成恰好 1 个不超过 20 字的下一步。它必须是当前事件的下一节点，不是五幕摘要。禁止改 /世界/剧情节点/当前事件 和 /世界/剧情节点/下一个事件。真没有可给的行动时才写成空数组。
