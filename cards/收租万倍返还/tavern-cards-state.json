@@ -4166,7 +4166,7 @@
   ],
   "creator": "",
   "creator_notes": "",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "create_date": "2026-10-03T15:07:26.433Z",
   "extensions": {
     "tavern_helper": {
@@ -4272,20 +4272,6 @@
       "runOnEdit": true,
       "substituteRegex": 0
     },
-    "行动选项界面(可关闭)": {
-      "id": "5f7a9892-a611-4e4f-90a7-648062130b91",
-      "findRegex": "```\n<body>",
-      "replaceString": "<div style=\"display:none\" data-opts-on=\"1\"></div>\n```\n<body>",
-      "trimStrings": [],
-      "placement": [
-        2
-      ],
-      "disabled": false,
-      "markdownOnly": true,
-      "promptOnly": false,
-      "runOnEdit": true,
-      "substituteRegex": 0
-    },
     "对AI隐藏变量更新": {
       "id": "aa12731a-97c4-4450-ac2f-0bfe1d6a4f64",
       "findRegex": "/<(update(?:variable)?)>(?:(?!.*<\\/\\1>)(?:(?!<\\1>).)*$|(?:(?!<\\1>).)*<\\/\\1?>)/gsi",
@@ -4330,6 +4316,21 @@
       "promptOnly": false,
       "runOnEdit": false,
       "substituteRegex": 0
+    },
+    "欢迎页渲染": {
+      "id": "b49b93e8-c36b-4691-a6a1-c235d65aaf53",
+      "findRegex": "/^\\s*<opening>([\\s\\S]*?)<\\/opening>[\\s\\S]*$/gsi",
+      "replace_file": "正则/欢迎页.html",
+      "trimStrings": [],
+      "placement": [
+        2
+      ],
+      "disabled": false,
+      "markdownOnly": true,
+      "promptOnly": false,
+      "runOnEdit": false,
+      "substituteRegex": 0,
+      "maxDepth": 1
     }
   },
   "zod": {

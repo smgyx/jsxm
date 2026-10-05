@@ -1,0 +1,483 @@
+```html
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <style>
+  /* 配色主题（右上角圆钮循环切换，localStorage 缓存） */
+  :root, :root[data-theme="sunny"] {
+    --bg: linear-gradient(160deg, #fdf8ef 0%, #f7f1e6 55%, #eef2f7 100%);
+    --ink: #3c3630; --sub: #8b8378; --line: rgba(140,120,90,.25);
+    --card: rgba(255,255,255,.78); --panel: rgba(255,255,255,.6); --input: rgba(255,255,255,.85);
+    --accent: #c96f4a; --accent-2: #4a7fc9; --ok: #4a9a6a;
+    --accent-glow: rgba(201,111,74,.18); --accent-soft: rgba(201,111,74,.12);
+    --sw-track: #d8d2c8; --sw-knob: #fff; --x-bg: rgba(140,120,90,.18); --x-ink: #6f675c;
+  }
+  :root[data-theme="dark"] {
+    --bg: linear-gradient(160deg, #1b1e26 0%, #15171e 55%, #101218 100%);
+    --ink: #d8dce4; --sub: #8d94a2; --line: rgba(150,160,180,.22);
+    --card: rgba(255,255,255,.05); --panel: rgba(255,255,255,.04); --input: rgba(255,255,255,.09);
+    --accent: #e09a6f; --accent-2: #6da3d8; --ok: #6ab586;
+    --accent-glow: rgba(224,154,111,.20); --accent-soft: rgba(224,154,111,.14);
+    --sw-track: #3a4048; --sw-knob: #e8eaf0; --x-bg: rgba(200,210,225,.16); --x-ink: #a8b0be;
+  }
+  :root[data-theme="paper"] {
+    --bg: linear-gradient(160deg, #e9e2d3 0%, #e2dac9 55%, #d8d3c4 100%);
+    --ink: #43403a; --sub: #847e72; --line: rgba(120,105,80,.28);
+    --card: rgba(255,253,247,.55); --panel: rgba(255,253,247,.5); --input: rgba(255,253,247,.8);
+    --accent: #b5643f; --accent-2: #48719f; --ok: #4a9a6a;
+    --accent-glow: rgba(181,100,63,.20); --accent-soft: rgba(181,100,63,.12);
+    --sw-track: #c9c0ae; --sw-knob: #fffdf8; --x-bg: rgba(120,105,80,.16); --x-ink: #6f675c;
+  }
+  :root[data-theme="ocean"] {
+    --bg: linear-gradient(160deg, #12202e 0%, #0f1a26 55%, #0c151f 100%);
+    --ink: #d3dee8; --sub: #7f93a6; --line: rgba(130,165,195,.22);
+    --card: rgba(255,255,255,.05); --panel: rgba(255,255,255,.04); --input: rgba(255,255,255,.09);
+    --accent: #5fa8d3; --accent-2: #d38b5f; --ok: #5fae8f;
+    --accent-glow: rgba(95,168,211,.22); --accent-soft: rgba(95,168,211,.14);
+    --sw-track: #2c3f50; --sw-knob: #e6eef5; --x-bg: rgba(150,180,205,.16); --x-ink: #9fb4c6;
+  }
+  :root[data-theme="rose"] {
+    --bg: linear-gradient(160deg, #241419 0%, #1e1115 55%, #170d10 100%);
+    --ink: #e3d5da; --sub: #a08a92; --line: rgba(200,150,165,.22);
+    --card: rgba(255,255,255,.05); --panel: rgba(255,255,255,.04); --input: rgba(255,255,255,.09);
+    --accent: #d9869b; --accent-2: #8f9ed8; --ok: #7aab7f;
+    --accent-glow: rgba(217,134,155,.20); --accent-soft: rgba(217,134,155,.13);
+    --sw-track: #4a333a; --sw-knob: #f0e2e6; --x-bg: rgba(210,170,180,.16); --x-ink: #b89aa3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "PingFang SC","Microsoft YaHei",sans-serif; background: var(--bg); color: var(--ink); padding: 12px; }
+
+  .wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+
+  /* 两页同构：内容区内部滚动 + 底部按钮钉住 */
+  #pageHost { position: relative; overflow: hidden; }
+  #page1, #page2 { display: flex; flex-direction: column; }
+  #page1 { height: 100%; }
+  #page2 { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  #page1Scroll, #page2Scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+  #page1 .btnrow, #page2 .btnrow, #page2 .hint { flex: none; }
+
+  .tipbox { position: fixed; z-index: 120; width: 280px; max-width: calc(100vw - 16px); display: none;
+    background: rgba(32,28,24,.95); color: #f3ede4; font-size: 11px; line-height: 1.7;
+    padding: 9px 11px; border-radius: 9px; box-shadow: 0 4px 14px rgba(0,0,0,.3); pointer-events: none; }
+  .tipbox b { color: #f0c9a8; }
+  h1 { font-size: 19px; letter-spacing: 1px; }
+  .tagline { color: var(--sub); font-size: 12px; margin: 4px 0 10px; }
+  .sec { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; }
+  .sec h2 { font-size: 13px; margin-bottom: 7px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .opt { flex: 1 1 118px; border: 1px solid var(--line); border-radius: 9px; padding: 6px 9px; cursor: pointer; background: var(--panel); transition: border-color .15s, box-shadow .15s; }
+  .opt.on { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+  .opt b { display: block; font-size: 13px; }
+  .opt span { display: block; color: var(--sub); font-size: 11px; margin-top: 1px; }
+
+  .headerSec { position: relative; }
+  .themebtn { position: absolute; top: 10px; right: 10px; z-index: 98; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line); cursor: pointer; background: var(--bg); transition: transform .15s; }
+  .themebtn::after { content: ''; position: absolute; right: 1px; bottom: 1px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 1px solid rgba(0,0,0,.2); }
+  .themebtn:hover { transform: scale(1.15); }
+
+  .swrow { display: flex; flex-wrap: wrap; gap: 8px; }
+  .switem { display: flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px 5px 8px; cursor: pointer; background: var(--panel); transition: border-color .15s, box-shadow .15s; user-select: none; }
+  .switem.on { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+  .sw { position: relative; width: 30px; height: 17px; border-radius: 999px; background: var(--sw-track); transition: background .15s; flex: none; }
+  .sw::after { content: ''; position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%; background: var(--sw-knob); transition: left .15s; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+  .switem.on .sw { background: var(--accent); }
+  .switem.on .sw::after { left: 15px; }
+  .switem b { font-size: 12.5px; font-weight: 600; }
+  .switem i { font-style: normal; color: var(--sub); font-size: 11px; }
+
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .row label { flex: 1 1 110px; font-size: 12px; color: var(--sub); }
+  .row input, .row textarea { width: 100%; margin-top: 3px; border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; font-size: 13px; font-family: inherit; color: var(--ink); background: var(--input); }
+  .row textarea { min-height: 54px; resize: vertical; }
+  .half { flex: 1 1 46% !important; }
+  #personaCustom { display: none; }
+  #personaCanon { display: none; color: var(--sub); font-size: 12px; }
+
+  .pager { display: flex; align-items: center; gap: 7px; margin-top: 9px; font-size: 12px; color: var(--sub); }
+  .pdot { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+  .pdot.on { background: var(--accent); }
+  .btnrow { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .btn, .pbtn { display: inline-block; border: 1px solid var(--accent); color: var(--accent); background: transparent; border-radius: 8px; padding: 7px 15px; font-size: 13px; cursor: pointer; }
+  .btn:active, .pbtn:active { background: var(--accent-soft); }
+  .pbtn.primary { background: var(--accent); color: #fff; }
+  .pbtn.primary:active { opacity: .85; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: baseline; border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px; font-size: 12px; background: var(--panel); }
+  .chip b { font-weight: 600; }
+  .chip em { font-style: normal; color: var(--sub); margin-left: 5px; }
+  .out { width: 100%; min-height: 200px; border: 1px solid var(--line); border-radius: 10px; padding: 8px; font-size: 12px; font-family: inherit; line-height: 1.6; color: var(--ink); background: var(--input); resize: vertical; }
+  .outplot { min-height: 128px; }
+  .hint { color: var(--sub); font-size: 11px; margin-top: 5px; }
+  .note { color: var(--sub); font-size: 12px; line-height: 1.8; }
+  .note b { color: var(--ink); }
+  @media (prefers-reduced-motion: reduce) { .opt, .sw, .switem, .themebtn { transition: none; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sec headerSec">
+    <h1>收租万倍返还</h1>
+    <div class="tagline">八月底的江城。填好你的房东档案，台阶上那三个姑娘的五块钱，马上要变成第一笔万倍返还。</div>
+    <div class="pager" id="pager">
+      <span class="pdot on" id="pd1"></span><span class="pdot" id="pd2"></span>
+      <span id="pagerText">第 1 / 2 页 · 选择开局身份与档案</span>
+    </div>
+    <span class="themebtn" id="themeBtn" role="button" title="切换配色（当前：暖阳）"></span>
+  </div>
+
+  <div id="pageHost">
+  <div id="page1">
+    <div id="page1Scroll">
+    <div class="sec">
+      <h2>① 开局身份（二选一）</h2>
+      <div class="opts" id="idOpts">
+        <div class="opt on" data-v="林野" data-tip="说明：以原著房东林野开局——三十岁，大厂十年项目负责人，拿补偿金全款买下翡翠湾叠墅，系统刚绑定。
+说明：档案按林野模板，开局后仍可随剧情自由行动。"><b>按林野开局</b><span>原著房东 · 三十岁 · 一栋叠墅</span></div>
+        <div class="opt" data-v="自定义" data-tip="说明：自定义你的姓名、年龄、性别、身高、体型、外貌与衣着，以自己的档案接手这栋叠墅和收租系统。
+说明：系统机制与原著剧情不变，只有「你是谁」由你决定。"><b>自定义房东</b><span>原创角色 · 自由设定档案</span></div>
+      </div>
+      <div id="personaCustom">
+        <div class="row">
+          <label>姓名<input id="pName" placeholder="你的名字"></label>
+          <label>年龄<input id="pAge" placeholder="如 28"></label>
+          <label>性别<input id="pGender" placeholder="男 / 女"></label>
+        </div>
+        <div class="row">
+          <label>身高<input id="pHeight" placeholder="如 一米八二"></label>
+          <label>体型<input id="pBody" placeholder="如 久坐微堕 / 长年健身"></label>
+        </div>
+        <div class="row">
+          <label class="half">外貌<textarea id="pAppearance" placeholder="长相、气质、发型……"></textarea></label>
+          <label class="half">衣着<textarea id="pWear" placeholder="常穿的打扮……"></textarea></label>
+        </div>
+        <div class="row">
+          <label style="flex-basis:100%">备注<textarea id="pNote" placeholder="背景、来历、职业等想补充的设定（可留空）"></textarea></label>
+        </div>
+      </div>
+      <div class="row" id="personaCanon">
+        <label style="flex-basis:100%">可补充微调（可选）<textarea id="pTweak" placeholder="在林野人设基础上做少量微调，留空则完全按原著开局"></textarea></label>
+      </div>
+      <div class="hint">系统机制与150章原著主线对所有人都一样，不同的只是「你是谁」。</div>
+    </div>
+
+    <div class="sec">
+      <h2>② 开局须知</h2>
+      <div class="note">
+        <b>章节锁：</b>剧情严格按原著150章推进，第N天就是第N章，事件调度器自动翻章，你只活在当前这一章里。<br>
+        <b>系统：</b>第1章收租系统只绑定、不发奖励；第2章收下三小妹那五块钱，才触发第一笔万倍返还。<br>
+        <b>收租：</b>翡翠湾叠墅五个房间还空着。租客的每一笔租金（现金、以物抵租都算）都会触发系统结算。<br>
+        <b>登记：</b>第二页生成的开局设定发出后，系统把你的档案写进变量，状态栏正式启用。开局前不要跳章、不要预支奖励。
+      </div>
+    </div>
+    </div>
+    <div class="btnrow" id="page1Btnrow">
+      <button class="pbtn primary" id="nextBtn">下一步 · 预览开局 →</button>
+    </div>
+  </div>
+
+  <div id="page2" style="display:none">
+    <div id="page2Scroll">
+    <div class="sec">
+      <h2>③ 开局档案概览</h2>
+      <div class="chips" id="chips"></div>
+      <div class="hint">以上随第一页的选择自动更新；需调整请点「上一步」返回修改。</div>
+    </div>
+
+    <div class="sec">
+      <h2>④ 开局设定（可编辑）</h2>
+      <textarea class="out" id="out"></textarea>
+    </div>
+
+    <div class="sec">
+      <h2>⑤ 开局剧情（第1章 · 可编辑）</h2>
+      <textarea class="out outplot" id="plotText"></textarea>
+      <div class="hint">发送时本段将以【开局剧情】行合并进开局设定文（紧随【开局场景】之后）；清空则不包含剧情行。</div>
+    </div>
+    </div>
+    <div class="btnrow">
+      <button class="pbtn" id="backBtn">← 上一步</button>
+      <button class="pbtn primary" id="fillBtn">填入发送栏</button>
+    </div>
+    <div class="hint" id="fillHint"></div>
+    <div class="hint">点击「填入发送栏」后直接点击发送即可开局；发送后剧情与变量按正常流程初始化。</div>
+  </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  /* 配色主题切换 */
+  var THEME_KEY = 'szwh_theme';
+  var THEMES = ['sunny', 'dark', 'paper', 'ocean', 'rose'];
+  var THEME_NAMES = { sunny: '暖阳', dark: '暗夜', paper: '素笺', ocean: '沧海', rose: '玫瑰暮' };
+
+  function currentTheme() {
+    var t = document.documentElement.getAttribute('data-theme');
+    return THEME_NAMES[t] ? t : 'sunny';
+  }
+
+  function applyTheme(t, save) {
+    if (!THEME_NAMES[t]) t = 'sunny';
+    document.documentElement.setAttribute('data-theme', t);
+    var btn = document.getElementById('themeBtn');
+    if (btn) btn.title = '切换配色（当前：' + THEME_NAMES[t] + '）';
+    if (save) {
+      try { localStorage.setItem(THEME_KEY, t); } catch (e) { /* 隐私模式等场景静默降级 */ }
+    }
+  }
+
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem(THEME_KEY); } catch (e) { savedTheme = null; }
+  applyTheme(savedTheme, false);
+
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var idx = THEMES.indexOf(currentTheme());
+    if (idx < 0) idx = 0;
+    applyTheme(THEMES[(idx + 1) % THEMES.length], true);
+  });
+
+  /* 页面状态 */
+  var state = {
+    id: '林野',
+    page: 1,
+    edited: { out: false, plot: false }
+  };
+
+  /* 固定开局：章节锁第1章 */
+  var OPENING = { ev: '01_收租万倍返还？', node: '开场' };
+
+  var DEFAULTS = {
+    姓名: '林野', 年龄: '30', 性别: '男', 身高: '一米八二',
+    体型: '久坐微堕，尚未被系统改造',
+    外貌: '三十岁，大厂十年项目负责人，气质偏沉',
+    衣着: '灰色T恤配黑色休闲裤'
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function val(id) { return ($(id).value || '').trim(); }
+
+  /* 唯一消息构建器：开局设定（剧情行由第二页⑤栏提供） */
+  function assemble() {
+    var lines;
+    if (state.id === '自定义') {
+      var p = [];
+      p.push('姓名 ' + (val('pName') || DEFAULTS.姓名));
+      p.push('年龄 ' + (val('pAge') || DEFAULTS.年龄));
+      p.push('性别 ' + (val('pGender') || DEFAULTS.性别));
+      p.push('身高 ' + (val('pHeight') || DEFAULTS.身高));
+      p.push('体型 ' + (val('pBody') || DEFAULTS.体型));
+      p.push('外貌 ' + (val('pAppearance') || DEFAULTS.外貌));
+      p.push('衣着 ' + (val('pWear') || DEFAULTS.衣着));
+      lines = ['【接手登记】' + p.join('｜') + '。'];
+      if (val('pNote')) lines.push('登记备注：' + val('pNote') + '。');
+    } else {
+      lines = ['按林野来'];
+      if (val('pTweak')) lines.push('在林野人设基础上的微调：' + val('pTweak') + '。');
+    }
+    lines.push('【开局事件】当前事件：' + OPENING.ev + '；当前节点：' + OPENING.node + '。');
+    lines.push('【开局场景】第1天下午，江城临街餐厅包间，母亲介绍的相亲对象周克梅正在开条件；饭后收租万倍返还系统绑定，翡翠湾叠墅五个房间还空着。在场：周克梅。');
+    var hy = '【变量初始化】开局当轮必须把 /主角/已登记 写为 true。';
+    if (state.id === '自定义') {
+      hy += '本条【接手登记】的七项档案必须逐项覆写主角基本信息；';
+    } else {
+      hy += '本局沿用林野默认模板，不要改写主角七项档案；';
+    }
+    hy += '周克梅须收录进 NPC（身份与关系均为键值明细）。此后女性角色登场当轮用 add 完整建档进红颜（基本信息/外貌/情感四维/生理/租约/关系/状态逐项建全、不留空），其他人物收录进 NPC。';
+    lines.push(hy);
+    lines.push('系统第1章只绑定不发奖励；第一笔万倍返还发生在第2章收下五块钱租金之后，禁止提前结算。');
+    if (state.id === '自定义') {
+      lines.push('我以自己的自定义身份接手这栋叠墅和收租系统，剧情骨架不变。');
+    } else {
+      lines.push('我以林野的身份与视角经历这条故事线。');
+    }
+    lines.push('请从【开局场景】开启第一幕。');
+    return lines.join('\n');
+  }
+
+  /* 第1章开局剧情（可在⑤栏手改） */
+  function defaultPlot() {
+    var base = '八月底的江城，闷热。第1天下午，临街餐厅的包间里，母亲介绍的相亲对象周克梅双手抱胸，连珠炮一样开条件：彩礼、五金、婚后不同住。林野起身出去抽了根烟，烟刚点上，脑子里响起陌生的机械音——【收租万倍返还系统正式绑定：您名下所有不动产的租金，将以万倍返还。】';
+    base += '回到包间结账时，隔壁烟酒店的台阶上传来姑娘们的说话声：三色高马尾的苏星彤带着宋小惠、沈嘉欣，全部家当只剩五块钱，今晚的住处还没着落。五间空房的叠墅、日租五十日结的生意、一笔注定要万倍返还的五块钱——故事从这顿没谈拢的相亲开始。';
+    if (state.id === '自定义') {
+      base += '注意：本局坐在包间里的是我自己的自定义档案，不是林野本人，按登记档案演绎我的言行。';
+    }
+    return base;
+  }
+
+  /* 第二页渲染：概览 chips + 两栏 */
+  function renderChips() {
+    var box = $('chips');
+    if (!box) return;
+    var name = state.id === '自定义' ? (val('pName') || '未指定') : '林野';
+    var items = [
+      ['身份', state.id === '自定义' ? '自定义房东' : '林野（原著房东）'],
+      ['姓名', name],
+      ['开局事件', OPENING.ev + ' · ' + OPENING.node],
+      ['系统', '第1章绑定 · 第2章首笔返还'],
+      ['空房', '翡翠湾叠墅 5 / 5']
+    ];
+    box.innerHTML = '';
+    items.forEach(function (it) {
+      var c = document.createElement('span');
+      c.className = 'chip';
+      var b = document.createElement('b');
+      b.textContent = it[0];
+      var em = document.createElement('em');
+      em.textContent = it[1];
+      c.appendChild(b); c.appendChild(em);
+      box.appendChild(c);
+    });
+  }
+
+  function renderPage2() {
+    renderChips();
+    if (!state.edited.out) $('out').value = assemble();
+    if (!state.edited.plot) $('plotText').value = defaultPlot();
+  }
+
+  function renderPage1() {
+    var custom = state.id === '自定义';
+    $('personaCustom').style.display = custom ? 'block' : 'none';
+    $('personaCanon').style.display = custom ? 'none' : 'flex';
+  }
+
+  function showPage(n) {
+    state.page = n;
+    $('page1').style.visibility = n === 1 ? 'visible' : 'hidden';
+    $('page2').style.display = n === 2 ? 'flex' : 'none';
+    $('pd1').classList.toggle('on', n === 1);
+    $('pd2').classList.toggle('on', n === 2);
+    $('pagerText').textContent = n === 1 ? '第 1 / 2 页 · 选择开局身份与档案' : '第 2 / 2 页 · 检查开局设定与剧情';
+    if (n === 2) {
+      renderPage2();
+      try { $('page2Scroll').scrollTop = 0; } catch (e) {}
+    }
+    if (n === 1) {
+      try { $('page1Scroll').scrollTop = 0; } catch (e) {}
+    }
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  function lockHostHeight() {
+    try {
+      var pc = $('personaCustom'), pn = $('personaCanon');
+      var saved = { pc: pc.style.display, pn: pn.style.display };
+      pc.style.display = 'block'; pn.style.display = 'none';
+      var frameH = Math.ceil($('page1Scroll').scrollHeight + $('page1Btnrow').offsetHeight + 10);
+      pc.style.display = saved.pc; pn.style.display = saved.pn;
+      if (frameH >= 150) {
+        $('pageHost').style.height = frameH + 'px';
+      } else if (!lockHostHeight._retried) {
+        lockHostHeight._retried = true;
+        setTimeout(function () { lockHostHeight(); }, 300);
+      }
+    } catch (e) { /* 测量失败时保持当前高度 */ }
+  }
+
+  /* 悬浮说明：单例浮层，fixed 定位+视口钳制 */
+  var tipDiv = null;
+  function initTips() {
+    try {
+      tipDiv = document.createElement('div');
+      tipDiv.className = 'tipbox';
+      document.body.appendChild(tipDiv);
+      var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+      Array.prototype.forEach.call(document.querySelectorAll('.opt[data-tip]'), function (el) {
+        el.addEventListener('mouseenter', function () {
+          var lines = (el.getAttribute('data-tip') || '').split('\n').filter(function (l) { return l.trim(); });
+          tipDiv.innerHTML = lines.map(function (line) {
+            var m = line.match(/^(说明)\s*[:：]\s*(.*)$/);
+            return m ? '<b>' + m[1] + '：</b>' + esc(m[2]) : esc(line);
+          }).join('<br>');
+          tipDiv.style.display = 'block';
+          var r = el.getBoundingClientRect();
+          var w = tipDiv.offsetWidth, h = tipDiv.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+          var left = Math.min(Math.max(r.left + r.width / 2 - w / 2, 8), Math.max(8, vw - w - 8));
+          var top = r.top - h - 10;
+          if (top < 8) top = r.bottom + 10;
+          if (top + h > vh - 8) top = Math.max(8, vh - h - 8);
+          tipDiv.style.left = left + 'px';
+          tipDiv.style.top = top + 'px';
+        });
+        el.addEventListener('mouseleave', function () { if (tipDiv) tipDiv.style.display = 'none'; });
+      });
+    } catch (e) { /* 浮层初始化失败时无悬浮说明，不影响功能 */ }
+  }
+
+  var idBox = $('idOpts');
+  idBox.addEventListener('click', function (ev) {
+    var opt = ev.target.closest('.opt');
+    if (!opt) return;
+    Array.prototype.forEach.call(idBox.children, function (c) { c.classList.remove('on'); });
+    opt.classList.add('on');
+    state.id = opt.getAttribute('data-v');
+    renderPage1();
+    if (state.page === 2) renderPage2();
+  });
+
+  $('nextBtn').addEventListener('click', function () { showPage(2); });
+  $('backBtn').addEventListener('click', function () { showPage(1); });
+
+  $('out').addEventListener('input', function () { state.edited.out = true; });
+  $('plotText').addEventListener('input', function () { state.edited.plot = true; });
+
+  ['pName','pAge','pGender','pHeight','pBody','pAppearance','pWear','pNote','pTweak'].forEach(function (id) {
+    $(id).addEventListener('input', function () {
+      if (state.page === 2) renderPage2();
+    });
+  });
+
+  /* 合并构建：设定行 + 【开局剧情】行 */
+  function buildFinal() {
+    var s = ($('out').value || '').trim();
+    var p = ($('plotText').value || '').trim();
+    var lines = s ? s.split('\n') : [];
+    lines = lines.filter(function (l) { return l.indexOf('【开局剧情】') !== 0; });
+    var out = [];
+    var inserted = false;
+    if (!p) return lines.join('\n');
+    for (var i = 0; i < lines.length; i++) {
+      out.push(lines[i]);
+      if (lines[i].indexOf('【开局场景】') === 0) {
+        out.push('【开局剧情】' + p);
+        inserted = true;
+      }
+    }
+    if (!inserted) out.push('【开局剧情】' + p);
+    return out.join('\n');
+  }
+
+  /* 填入发送栏：直接覆盖——发送栏已有内容时先清空再填入（触发 input 事件走宿主链） */
+  $('fillBtn').addEventListener('click', function () {
+    var text = buildFinal();
+    try {
+      var doc = window.parent.document;
+      var ta = doc.querySelector('#send_textarea');
+      if (!ta) throw new Error('未找到发送栏');
+      ta.value = text;
+      ta.dispatchEvent(new Event('input', { bubbles: true }));
+      ta.focus();
+      $('fillHint').textContent = '已填入发送栏，点击发送即可开局';
+    } catch (e) {
+      $('out').readOnly = false;
+      $('out').select();
+      $('fillHint').textContent = '无法直达发送栏，开局设定文已全选——请复制粘贴后发送（注意自行补入【开局剧情】行）';
+    }
+  });
+
+  /* 初始化 */
+  (function init() {
+    initTips();
+    renderPage1();
+    renderPage2();
+    showPage(1);
+    lockHostHeight();
+  })();
+})();
+</script>
+</body>
+</html>
+```
